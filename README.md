@@ -5,7 +5,7 @@
 
 ## 현재 상태
 
-4단계 중 **1단계 완료**: 작품 데이터, Canon Engine, BM25 검색, canon-guard 검사기. 작업별 진행 상황은 [docs/implementation-plan.md](docs/implementation-plan.md)에 있다.
+4단계 중 **2단계 완료**: 작품 데이터, Canon Engine, BM25 검색, canon-guard 검사기(1단계) + 대화 파이프라인, LLM 어댑터(mock/Ollama), FastAPI·WebSocket, 관계 그래프, 가상 분기, 탐험 기록(2단계). 작업별 진행 상황은 [docs/implementation-plan.md](docs/implementation-plan.md)에 있다.
 
 ## MVP
 
@@ -16,13 +16,14 @@
 
 ```
 backend/app/
-  canon/models.py      작품 데이터 스키마 (Pydantic, frozen)
-  canon/store.py       works/ 로더 (읽기 전용)
-  canon/integrity.py   데이터 무결성 검사
-  canon/knowledge.py   인물별 지식 범위 (검색 전 필터)
-  canon/guard.py       canon-guard: 답변 규칙 검사
-  retrieval/bm25.py    BM25 + 한→영 용어집 검색
-  ai/schemas.py        LLM 출력 스키마 (주장 단위)
+  canon/               원작 데이터 스키마·로더·무결성·지식 범위·canon-guard
+  retrieval/           BM25 + 한→영 용어집 검색
+  ai/                  LLM 출력 스키마, 어댑터 (mock / ollama)
+  characters/          인물 프롬프트
+  dialogue/            대화 파이프라인 (검색 → 생성 → 검증 → 재생성)
+  relationships/       NetworkX 관계 그래프
+  branching/           가상 분기
+  services/ api/       유스케이스, REST·WebSocket
 works/gatsby/          원작 데이터 (passage-tags.yaml → passages.jsonl)
 tools/                 원문 추출, 스모크 테스트
 docs/                  제안서, 결정 기록, 저작권, 라이선스, 실험
@@ -37,7 +38,14 @@ uv run pytest
 uv run ruff check . ../tools
 uv run python -m app.canon.integrity ../works/gatsby
 uv run python ../tools/smoke.py   # 단계별 스모크 테스트
+
+# API 서버 (기본 mock 모델, http://127.0.0.1:8000/docs)
+uv run uvicorn --factory app.main:create_app --reload
+# 실모델: Ollama에서 `ollama pull qwen3:8b` 후
+LITVERSE_LLM=ollama uv run uvicorn --factory app.main:create_app
 ```
+
+설정은 [.env.example](.env.example) 참고. 설계는 [backend/DESIGN.md](backend/DESIGN.md).
 
 원문을 다시 추출하려면 (PG 원문 파일은 커밋하지 않는다):
 

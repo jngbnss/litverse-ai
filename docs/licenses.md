@@ -13,8 +13,13 @@
 | Qdrant | 비교 실험 | Apache-2.0 | - | pending |
 | LangGraph | (후순위) 파이프라인 | MIT | - | pending |
 | spaCy | 인물·장소 추출 | MIT | - | pending |
-| NetworkX | 관계 그래프 | BSD-3-Clause | - | pending |
-| FastAPI / Pydantic / SQLAlchemy | 백엔드 | MIT | - | pending |
+| NetworkX | 관계 그래프 | BSD-3-Clause | 3.7 | pending |
+| FastAPI | API 서버 | MIT | 0.143.0 | pending |
+| Pydantic | 스키마 검증 | MIT | 2.14.0 | pending |
+| SQLAlchemy | 세션 DB | MIT | 2.1.4 | pending |
+| uvicorn | ASGI 서버 | BSD-3-Clause | 0.54.0 | pending |
+| httpx | Ollama 호출, 테스트 | BSD-3-Clause | 0.28.1 | pending |
+| PyYAML | 작품 데이터 로드 | MIT | 6.0.3 | pending |
 | React / Vite / Zustand | 프론트엔드 | MIT | - | pending |
 | Kokoro-82M (선택) | TTS | Apache-2.0 | - | pending |
 

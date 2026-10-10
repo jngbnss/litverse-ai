@@ -57,7 +57,77 @@ def stage1() -> None:
     print("  guard: grounded reply passes, hidden-fact leak blocked")
 
 
-STAGES: dict[int, Callable[[], None]] = {1: stage1}
+def stage2() -> None:
+    from fastapi.testclient import TestClient
+
+    from app.canon.store import fingerprint
+    from app.core.config import Settings
+    from app.main import create_app
+
+    work = get_work("gatsby")
+    before = fingerprint(work.path)
+    c = TestClient(create_app(Settings(llm="mock", database_url="sqlite://")))
+
+    # 1·2. 작품과 장면 선택 → 세션
+    assert c.get("/api/health").json()["llm"] == "mock"
+    assert c.get("/api/works").json()[0]["work_id"] == "gatsby"
+    sid = c.post("/api/sessions", json={"work_id": "gatsby", "scene_id": "ch03-party"}).json()[
+        "session_id"
+    ]
+    base = f"/api/sessions/{sid}"
+    print(f"  session: {sid}")
+
+    # 3. 오브젝트 조사
+    for obj in ("invitation", "library-books", "ditch-coupe"):
+        r = c.post(f"{base}/inspect/{obj}")
+        assert r.status_code == 200 and r.json()["passages"], obj
+    print("  inspect: 3 objects ok")
+
+    # 4·5·6. 자유 질문 → 지식 범위 안의 답 → 근거
+    with c.websocket_connect(f"{base}/ws") as ws:
+        for character_id, question in [
+            ("nick", "개츠비가 사람을 죽였다는 소문이 있어?"),
+            ("jordan", "개츠비가 서재에서 무슨 이야기를 했어?"),
+            ("gatsby", "전쟁 때 어느 사단에 있었어요?"),
+            ("nick", "개츠비가 계단에 혼자 서 있던 건 무슨 의미일까?"),
+        ]:
+            ws.send_json({"character_id": character_id, "question": question})
+            assert ws.receive_json()["type"] == "thinking"
+            reply = ws.receive_json()
+            assert ws.receive_json()["type"] == "done"
+            assert reply["type"] == "reply" and reply["consistent"], reply
+            kinds = sorted({ci["type"] for ci in reply["citations"]})
+            print(f"  {character_id}: {reply['reply'][:40]}… {kinds}")
+            if character_id == "jordan":
+                assert "만 건너" not in reply["reply"] and "데이지" not in reply["reply"]
+
+    # 7. 관계도
+    graph = c.get(f"{base}/graph").json()
+    assert "daisy" not in {n["id"] for n in graph["nodes"]}
+    print(f"  graph: {len(graph['nodes'])} nodes, {len(graph['edges'])} edges (daisy hidden)")
+
+    # 8·9. 원작과 다른 선택 → 별도 분기
+    branch = c.post(f"{base}/branches", json={"option_id": "w-nick-asks-rumor"}).json()
+    assert branch["label"] == "AI WHAT-IF"
+    assert all(e["consistent"] for e in branch["events"])
+    r = c.post(f"{base}/dialogue", json={"character_id": "gatsby", "question": "정말 그랬나요?"})
+    assert r.json()["mode"] == "what_if"
+    c.post(f"{base}/branches/exit")
+    assert fingerprint(work.path) == before
+    print(f"  branch: {len(branch['events'])} events, canon fingerprint unchanged")
+
+    # 10. 기록에서 사실·해석·분기 구분
+    rep = c.get(f"{base}/report").json()
+    assert rep["canon"]["facts"] and rep["what_if"]
+    assert rep["interpretation"]["claims"] or rep["interpretation"]["team"]
+    print(
+        f"  report: canon {len(rep['canon']['facts'])}, "
+        f"interpretation {len(rep['interpretation']['claims']) + len(rep['interpretation']['team'])}, "
+        f"what-if {len(rep['what_if'])}"
+    )
+
+
+STAGES: dict[int, Callable[[], None]] = {1: stage1, 2: stage2}
 
 
 def main() -> int:

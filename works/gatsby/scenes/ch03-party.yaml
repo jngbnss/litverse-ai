@@ -46,6 +46,9 @@ branches:
       개츠비가 정체를 밝힌 직후, 닉이 "사람을 죽였다는 소문이 있던데요"라고 그에게 직접 묻는다.
     diverges_at: t03-party-midnight
     affected_characters: [nick, gatsby, jordan]
+    relation_changes:
+      - {source: gatsby, target: nick, label_ko: 경계심}
+      - {source: nick, target: gatsby, label_ko: 직접 확인하려 함}
 
 discussion_questions_ko:
   - 손님들의 소문은 개츠비에 대해 무엇을 알려 주고, 손님들 자신에 대해서는 무엇을 알려 주는가?

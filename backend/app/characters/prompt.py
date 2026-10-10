@@ -1,0 +1,92 @@
+"""인물 프롬프트 빌더.
+
+모델에 들어가는 원문은 지식 필터를 통과한 문단뿐이다 (D-003).
+숨긴 문단은 '알지만 말하지 말 것'으로 표시해서 넣는다.
+"""
+
+from app.ai.adapters import ContextFact, ContextPassage, GenerationContext
+from app.ai.schemas import CharacterReply, Mode
+from app.canon.models import Character
+
+RULES_CANON = """\
+규칙:
+1. 아래 <passage>에 있는 내용만 원작 사실(CANON)로 말한다. CANON 주장에는 그 passage_id를 붙인다.
+2. 원문에서 추론한 생각은 INTERPRETATION으로 표시하고 "~로 볼 수 있다", "~일지도 모른다"처럼 단정하지 않는다.
+3. hidden="true" 문단은 네가 알지만 지금은 말하지 않으려는 비밀이다. 인용하지 말고, 넌지시 피한다.
+4. 문단에 없는 일, 앞으로 일어날 일, 다른 사람의 속마음은 모른다고 답한다.
+5. 원작 모드에서는 WHAT_IF 주장을 쓰지 않는다. mode는 "canon"이다.
+6. 한국어로, 인물의 말투로 2~4문장만 답한다.
+"""
+
+RULES_WHAT_IF = """\
+규칙 (AI WHAT-IF 가상 분기):
+1. 지금은 원작과 다른 가정의 세계다. 가정에서 생긴 일은 WHAT_IF 주장으로 표시한다.
+2. 원작에서 확인되는 내용을 함께 말할 때는 CANON으로 표시하고 passage_id를 붙인다.
+3. 분기 시점 이후의 원작 사건이나 결말은 모른다.
+4. mode는 "what_if"이다. 한국어로, 인물의 말투로 2~4문장만 답한다.
+"""
+
+
+def _passage_block(p: ContextPassage) -> str:
+    hidden = ' hidden="true"' if p.hidden else ""
+    return f'<passage id="{p.passage_id}" chapter="{p.chapter}"{hidden}>\n{p.text}\n</passage>'
+
+
+def _fact_line(f: ContextFact) -> str:
+    label = "원작 사실" if f.kind == "canon" else "해석 후보"
+    return f"- [{label}] {f.statement_ko} (근거: {', '.join(f.passage_ids)})"
+
+
+def system_prompt(character: Character, ctx: GenerationContext, scene_label: str) -> str:
+    lines = [
+        f"너는 F. 스콧 피츠제럴드의 『위대한 개츠비』 속 {character.display_name_ko}"
+        f"({character.display_name})다. 지금은 {scene_label}이다.",
+        f"역할: {character.role_ko}",
+        f"성격: {', '.join(character.personality_traits)}",
+        f"말투: {', '.join(character.speech_style)}",
+        f"목표: {', '.join(character.goals)}",
+    ]
+    if character.background_notes_ko:
+        lines.append("배경(팀 요약, 근거로 인용 불가): " + " ".join(character.background_notes_ko))
+    lines.append("")
+    lines.append(RULES_WHAT_IF if ctx.mode == "what_if" else RULES_CANON)
+    if ctx.branch_premise_ko:
+        lines.append(f"가정: {ctx.branch_premise_ko}\n")
+    if ctx.facts:
+        lines.append("네가 아는 사실:")
+        lines.extend(_fact_line(f) for f in ctx.facts)
+        lines.append("")
+    lines.append("검색된 원문:")
+    lines.extend(_passage_block(p) for p in ctx.passages)
+    if not ctx.passages:
+        lines.append("(없음)")
+    return "\n".join(lines)
+
+
+def build_messages(
+    character: Character,
+    ctx: GenerationContext,
+    scene_label: str,
+    history: list[tuple[str, str]],
+) -> tuple[dict[str, str], ...]:
+    messages = [{"role": "system", "content": system_prompt(character, ctx, scene_label)}]
+    for question, answer in history:
+        messages.append({"role": "user", "content": question})
+        messages.append({"role": "assistant", "content": answer})
+    messages.append({"role": "user", "content": ctx.question})
+    return tuple(messages)
+
+
+def retry_message(issues: list[str]) -> dict[str, str]:
+    return {
+        "role": "user",
+        "content": "방금 답변은 규칙을 어겼다: "
+        + "; ".join(issues)
+        + ". 규칙을 지켜서 JSON으로 다시 답하라.",
+    }
+
+
+def reply_schema(mode: Mode) -> dict:
+    schema = CharacterReply.model_json_schema()
+    schema["properties"]["mode"] = {"const": mode}
+    return schema

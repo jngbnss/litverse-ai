@@ -1,5 +1,6 @@
 """works/<work_id>/ 디렉터리를 읽어 불변 Work 객체로 만든다."""
 
+import hashlib
 from collections.abc import Mapping
 from dataclasses import dataclass
 from functools import cache
@@ -120,6 +121,15 @@ def load_work(path: Path) -> Work:
             GlossaryEntry.model_validate(g) for g in _yaml(path / "glossary.yaml")["entries"]
         ),
     )
+
+
+def fingerprint(path: Path) -> str:
+    """원작 디렉터리 전체의 해시. 분기 전후로 같아야 한다 (원작 오염 검사)."""
+    h = hashlib.sha256()
+    for f in sorted(p for p in path.rglob("*") if p.is_file()):
+        h.update(f.relative_to(path).as_posix().encode())
+        h.update(f.read_bytes())
+    return h.hexdigest()
 
 
 @cache

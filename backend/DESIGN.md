@@ -12,17 +12,46 @@ app/
     integrity.py    참조 무결성, 허용 파일 목록, 라이선스 상태
     knowledge.py    KnowledgeView: 인물 × 시점 → 볼 수 있는 / 숨기는 문단
     guard.py        canon-guard: CharacterReply → ConsistencyReport
-  retrieval/      Retriever Protocol + BM25 (2·4단계: 임베딩)
-  ai/             schemas.py (LLM 출력), adapters/ (mock, ollama)        [2단계]
-  characters/     프롬프트 빌더, 인물 응답 생성                           [2단계]
-  dialogue/       파이프라인: 검색 → 생성 → 검증 → 재생성 → 안전 답변      [2단계]
-  relationships/  NetworkX 그래프, 시점별 공개                            [2단계]
-  branching/      가상 분기 상태와 이벤트                                 [2단계]
-  api/            FastAPI 라우터, WebSocket                               [2단계]
-  core/           설정, DB 세션                                           [2단계]
+  retrieval/      Retriever Protocol + BM25 (4단계: 임베딩)
+  ai/
+    schemas.py      LLM 출력 스키마 (CharacterReply, Claim, ConsistencyReport)
+    adapters.py     LLMAdapter Protocol, MockLLM, ScriptedLLM(테스트), OllamaLLM
+  characters/
+    prompt.py       시스템 프롬프트, 재생성 메시지, 모드별 JSON 스키마
+  dialogue/
+    intent.py       의도 분류 (fact / interpretation / smalltalk / what_if)
+    pipeline.py     run_turn: 검색 → 생성 → 검증 → 재생성 → 안전 답변
+  relationships/
+    graph.py        NetworkX MultiDiGraph, 시점별 공개, 분기 관계 덧씌우기
+  branching/
+    engine.py       분기 생성(스냅샷·이벤트·반응), 원작 해시 검사, 분기 종료
+  services/
+    litverse.py     세션 유스케이스 (생성·조사·대화·관계도·분기·기록)
+    report.py       탐험 기록 집계
+  api/routes.py   FastAPI REST + WebSocket (/api 접두사)
+  core/
+    config.py       환경변수 설정 (.env.example)
+    db.py           SQLAlchemy 모델: sessions, turns, discoveries, branches, branch_events
+  main.py         create_app() — `uv run uvicorn --factory app.main:create_app`
 ```
 
-의존 방향: `api → dialogue → (characters, retrieval, canon, ai)`. `canon`은 다른 모듈에 의존하지 않는다. `canon/knowledge + guard`는 나중에 `canon-guard` 라이브러리로 분리할 수 있게 `Work`·`KnowledgeView`·스키마에만 의존한다.
+의존 방향: `api → services → (dialogue, branching, relationships) → (characters, retrieval, canon, ai)`. `canon`이 의존하는 것은 `ai/schemas.py`뿐이다. `canon/knowledge + guard`는 나중에 `canon-guard` 라이브러리로 분리할 수 있게 `Work`·`KnowledgeView`·스키마에만 의존한다.
+
+## API
+
+| 메서드 | 경로 (`/api` 접두사) | 용도 |
+|---|---|---|
+| GET | `/health` | 상태, 사용 중인 LLM |
+| GET | `/works`, `/works/{id}`, `/works/{id}/scenes/{sid}` | 작품·장면 정보 (인물의 지식 부여 같은 내부 정보는 노출 안 함) |
+| POST | `/sessions` | 세션 생성 `{work_id, scene_id}` |
+| GET | `/sessions/{id}` | 세션 상태 (now, mode, branch_id) |
+| POST | `/sessions/{id}/inspect/{object_id}` | 오브젝트 조사 → 원문 발췌(240자), 관련 사실 |
+| POST | `/sessions/{id}/dialogue` | 대화 한 턴 `{character_id, question}` |
+| WS | `/sessions/{id}/ws` | 대화. 이벤트: `thinking` → `reply` → `done` / `error` |
+| GET | `/sessions/{id}/graph` | 관계도. 분기 중이면 `what_if` 간선 포함 |
+| POST | `/sessions/{id}/branches` | 분기 생성 `{option_id}` |
+| POST | `/sessions/{id}/branches/exit` | 원작 모드로 복귀 |
+| GET | `/sessions/{id}/report` | 탐험 기록: canon / interpretation / what_if 분리 |
 
 ## 대화 한 턴의 흐름
 

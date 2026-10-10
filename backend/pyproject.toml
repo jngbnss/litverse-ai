@@ -4,8 +4,13 @@ version = "0.1.0"
 description = "LitVerse AI backend: canon engine, retrieval, character agents"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "fastapi>=0.143.0",
+    "httpx>=0.28.1",
+    "networkx>=3.7",
     "pydantic>=2.8",
     "pyyaml>=6.0",
+    "sqlalchemy>=2.1.4",
+    "uvicorn[standard]>=0.54.0",
 ]
 
 [dependency-groups]
@@ -23,6 +28,7 @@ packages = ["app"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient`"]
 
 [tool.ruff]
 line-length = 100
@@ -30,4 +36,4 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM"]
-ignore = ["SIM905"]
+ignore = ["SIM905", "E501"]  # line length is handled by ruff format

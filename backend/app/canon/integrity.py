@@ -93,6 +93,9 @@ def check_work(work: Work) -> list[str]:
                 errors.append(f"{where} branch {b.branch_id}: diverges after scene 'now'")
             for c in b.affected_characters:
                 need("character", c, chars, f"{where} branch {b.branch_id}")
+            for rc in b.relation_changes:
+                need("character", rc.source, chars, f"{where} branch {b.branch_id}")
+                need("character", rc.target, chars, f"{where} branch {b.branch_id}")
 
     if work.metadata.default_scene not in work.scenes:
         errors.append(f"metadata: unknown default_scene '{work.metadata.default_scene}'")

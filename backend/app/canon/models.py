@@ -147,12 +147,21 @@ class DialogueGoal(Frozen):
     goal_ko: str
 
 
+class RelationChange(Frozen):
+    """분기 템플릿이 예상하는 관계 변화. 원작 관계를 바꾸지 않고 분기 안에만 덧씌운다."""
+
+    source: Id
+    target: Id
+    label_ko: str
+
+
 class BranchOption(Frozen):
     branch_id: Id
     title_ko: str
     premise_ko: str
     diverges_at: Id
     affected_characters: tuple[Id, ...]
+    relation_changes: tuple[RelationChange, ...] = ()
 
 
 class Scene(Frozen):
