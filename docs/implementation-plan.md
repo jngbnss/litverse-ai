@@ -87,19 +87,19 @@ uv run python ../tools/smoke.py
 
 결과 (2026-10-11): `smoke.py --stage 3` 통과. 타입 검사, vitest 9개, 빌드 통과. uvicorn과 `vite preview`를 실제로 띄워 프록시를 거친 REST·WebSocket·분기·기록 확인. 브라우저 화면은 사람이 직접 확인해야 한다.
 
-## 4단계 · 평가 + CI + 실모델 — `대기`
+## 4단계 · 평가 + CI + 실모델 — `진행중`
 
 목표: 시나리오 11 (평가 스크립트로 사실 일치율과 인물 일관성 측정), CI 녹색.
 
 | ID | 작업 | 설계 요약 | 상태 |
 |---|---|---|---|
-| 4-1 | 평가 데이터 80개 | retrieval 30, canon 20, character 20, branch 10 (`evals/*.jsonl`) | 대기 |
-| 4-2 | 평가 스크립트 | `evals/run_eval.py`: Recall@K, 근거 없는 주장 비율, 지식 범위 위반률, 미래 누설률, 원작 오염률 → JSON 리포트 | 대기 |
-| 4-3 | GitHub Actions | `permissions: contents: read`. ruff, pytest, 무결성 검사, 평가(mock), tsc, vite build, 스모크 | 대기 |
-| 4-4 | 임베딩 검색 (선택 의존성) | BGE-M3 + FAISS를 `Retriever`로 구현. 없으면 BM25로 대체. CI에서는 다운로드하지 않음 | 대기 |
-| 4-5 | 실모델 실험 | Ollama Qwen3-8B 4bit와 mock 비교, BM25와 BGE-M3 비교 → `experiments.md` | 대기 |
-| 4-6 | 라이선스 확정 | `licenses.md`의 버전과 라이선스 verified, 저장소 LICENSE 결정 | 대기 |
-| 4-7 | 스모크 테스트 | stage 4: `run_eval.py --llm mock`이 기준치 이상 | 대기 |
+| 4-1 | 평가 데이터 80개 | retrieval 30, canon 20, character 20, branch 10 (`evals/*.jsonl`) | 진행중 |
+| 4-2 | 평가 스크립트 | `evals/run_eval.py`: Recall@K, 근거 없는 주장 비율, 지식 범위 위반률, 미래 누설률, 원작 오염률 → JSON 리포트 | 진행중 |
+| 4-3 | GitHub Actions | `permissions: contents: read`. ruff, pytest, 무결성 검사, 평가(mock), tsc, vite build, 스모크 | 진행중 |
+| 4-4 | 임베딩 검색 (선택 의존성) | BGE-M3 + FAISS를 `Retriever`로 구현. 없으면 BM25로 대체. CI에서는 다운로드하지 않음 | 진행중 |
+| 4-5 | 실모델 실험 | Ollama Qwen3-8B 4bit와 mock 비교, BM25와 BGE-M3 비교 → `experiments.md` | 진행중 |
+| 4-6 | 라이선스 확정 | `licenses.md`의 버전과 라이선스 verified, 저장소 LICENSE 결정 | 진행중 |
+| 4-7 | 스모크 테스트 | stage 4: `run_eval.py --llm mock`이 기준치 이상 | 진행중 |
 
 ## 막힌 점
 
