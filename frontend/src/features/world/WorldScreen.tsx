@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Badge } from "../../components/Badge";
 import { CitationList } from "../../components/CitationList";
+import { shortName } from "../../components/names";
 import { Portrait } from "../../components/Portrait";
 import ui from "../../components/ui.module.css";
 import { useSession } from "../../store/session";
@@ -57,8 +58,8 @@ export function WorldScreen() {
                 }}
                 aria-label={`${c.display_name_ko}와 대화하기`}
               >
-                <Portrait id={c.character_id} size={44} label={c.display_name_ko} />
-                {c.display_name_ko.split(" ")[0]}
+                <Portrait id={c.character_id} size={52} label={c.display_name_ko} />
+                <span className={s.personName}>{shortName(c.character_id, c.display_name_ko)}</span>
               </button>
             );
           })}
@@ -104,7 +105,7 @@ export function WorldScreen() {
             {scene.dialogue_goals.map((g) => {
               const c = scene.characters.find((x) => x.character_id === g.character_id);
               return (
-                <li key={g.character_id} className={s.row}>
+                <li key={g.character_id} className={s.row} style={{ flexWrap: "nowrap", alignItems: "flex-start" }}>
                   <Portrait id={g.character_id} size={28} label={c?.display_name_ko ?? ""} />
                   <span>
                     <strong>{c?.display_name_ko}</strong> — {g.goal_ko}

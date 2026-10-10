@@ -50,7 +50,7 @@ tests/            vitest + Testing Library
 ```bash
 cd frontend
 npm install
-npm run dev        # http://localhost:5173, /api는 127.0.0.1:8000으로 프록시
+npm run dev        # http://localhost:5173, /api는 127.0.0.1:8010으로 프록시 (LITVERSE_BACKEND로 변경 가능)
 npm test           # vitest
 npm run build      # 타입 검사 + 빌드
 ```

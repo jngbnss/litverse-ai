@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 
 import { CitationList } from "../../components/CitationList";
+import { shortName } from "../../components/names";
 import ui from "../../components/ui.module.css";
 import { api } from "../../services/api";
 import { useSession } from "../../store/session";
 import type { Graph, GraphEdge } from "../../types/api";
 import s from "../screens.module.css";
 
-const W = 720;
-const H = 460;
+const W = 760;
+const H = 540;
 const COLOR = { canon: "var(--canon)", interpretation: "var(--interp)", what_if: "var(--whatif)" };
 const KIND_KO = { canon: "원작 관계", interpretation: "해석", what_if: "AI WHAT-IF" };
 
 /** 노드를 원 위에 고정 배치한다. 결정적이라 테스트하기 쉽다. */
 export function layout(ids: string[]): Record<string, { x: number; y: number }> {
   const out: Record<string, { x: number; y: number }> = {};
-  const r = Math.min(W, H) * 0.34;
+  const r = Math.min(W, H) * 0.38;
   ids.forEach((id, i) => {
     const a = -Math.PI / 2 + (2 * Math.PI * i) / Math.max(ids.length, 1);
     out[id] = { x: W / 2 + r * Math.cos(a), y: H / 2 + r * Math.sin(a) };
@@ -33,7 +34,7 @@ export function curveOffsets(edges: GraphEdge[]): Record<string, number> {
   const out: Record<string, number> = {};
   for (const ids of Object.values(groups)) {
     ids.forEach((id, i) => {
-      out[id] = (i - (ids.length - 1) / 2) * 70;
+      out[id] = (i - (ids.length - 1) / 2) * 90;
     });
   }
   return out;
@@ -75,7 +76,7 @@ export function GraphScreen() {
         <svg className={s.graph} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="인물 관계도">
           <defs>
             {Object.entries(COLOR).map(([k, c]) => (
-              <marker key={k} id={`arrow-${k}`} viewBox="0 0 10 10" refX="34" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <marker key={k} id={`arrow-${k}`} viewBox="0 0 10 10" refX="40" refY="5" markerWidth="7" markerHeight="7" orient="auto">
                 <path d="M0 0 L10 5 L0 10 Z" fill={c} />
               </marker>
             ))}
@@ -121,7 +122,7 @@ export function GraphScreen() {
             <g key={n.id} transform={`translate(${pos[n.id].x} ${pos[n.id].y})`}>
               <circle r="30" fill="var(--surface)" stroke="var(--accent)" strokeWidth="2" />
               <text className={s.nodeLabel} textAnchor="middle" dy="5">
-                {n.label_ko.split(" ")[0]}
+                {shortName(n.id, n.label_ko)}
               </text>
             </g>
           ))}

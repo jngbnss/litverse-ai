@@ -22,7 +22,7 @@ export function CitationList({ items }: { items: Item[] }) {
               {c.chapter}장 · {c.passage_id}
             </span>
           </div>
-          <div className={styles.quote}>“{c.excerpt}”</div>
+          <div className={styles.quote}>{c.excerpt}</div>
         </li>
       ))}
     </ul>

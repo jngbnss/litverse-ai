@@ -17,10 +17,10 @@
 ## 로컬에서 실행
 
 ```bash
-# 터미널 1: 백엔드 (기본 mock 모델) → http://127.0.0.1:8000/docs
+# 터미널 1: 백엔드 (기본 mock 모델) → http://127.0.0.1:8010/docs
 cd backend
 uv sync
-uv run uvicorn --factory app.main:create_app --port 8000
+uv run uvicorn --factory app.main:create_app --port 8010
 
 # 터미널 2: 프론트엔드 → http://localhost:5173
 cd frontend

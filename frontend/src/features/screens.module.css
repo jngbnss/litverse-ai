@@ -86,7 +86,7 @@
   box-shadow: var(--shadow);
 }
 
-.stage svg {
+.stage > svg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -125,10 +125,22 @@
   gap: 2px;
   border: none;
   background: none;
-  color: #fff;
+  padding: 0;
+}
+
+.personName {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0 8px;
   font-size: 12px;
   font-weight: 700;
-  text-shadow: 0 1px 2px #000;
+}
+
+.person:hover .personName {
+  background: var(--accent);
+  color: var(--surface);
 }
 
 /* --- dialogue ---------------------------------------------------------- */
