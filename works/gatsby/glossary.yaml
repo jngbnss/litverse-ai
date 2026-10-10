@@ -1,0 +1,53 @@
+# 한국어 질의 → 영어 원문 검색어 확장 (BM25 기준선용). 임베딩 검색이 붙으면 비교 실험 대상.
+entries:
+  - {ko: 개츠비, en: [gatsby]}
+  - {ko: 조던, en: [jordan, baker]}
+  - {ko: 닉, en: [nick]}
+  - {ko: 데이지, en: [daisy]}
+  - {ko: 소문, en: [somebody, told, whispers, heard, rumour]}
+  - {ko: 죽였, en: [killed, man]}
+  - {ko: 살인, en: [killed, man]}
+  - {ko: 스파이, en: [spy, german]}
+  - {ko: 독일, en: [german, germany]}
+  - {ko: 전쟁, en: [war, army, division, france]}
+  - {ko: 군대, en: [army, division, infantry]}
+  - {ko: 사단, en: [division, infantry]}
+  - {ko: 초대, en: [invited, invitation, note, chauffeur]}
+  - {ko: 쪽지, en: [note, chauffeur]}
+  - {ko: 책, en: [books, library, pages, shelves]}
+  - {ko: 서재, en: [library, books, shelves]}
+  - {ko: 도서관, en: [library, books]}
+  - {ko: 페이지, en: [pages, cut]}
+  - {ko: 오렌지, en: [oranges, lemons, crates]}
+  - {ko: 레몬, en: [lemons, oranges]}
+  - {ko: 과일, en: [oranges, lemons, fruiterer]}
+  - {ko: 음악, en: [orchestra, music, jazz]}
+  - {ko: 오케스트라, en: [orchestra, oboes, trombones]}
+  - {ko: 칵테일, en: [cocktails, cocktail, bar]}
+  - {ko: 술, en: [drinking, champagne, cocktails, drunk]}
+  - {ko: 파티, en: [party, parties, guests]}
+  - {ko: 손님, en: [guests, people]}
+  - {ko: 차, en: [car, coupé, wheel, ditch]}
+  - {ko: 자동차, en: [car, coupé, automobiles]}
+  - {ko: 사고, en: [ditch, wheel, wreck]}
+  - {ko: 도랑, en: [ditch]}
+  - {ko: 바퀴, en: [wheel]}
+  - {ko: 운전, en: [driving, driver]}
+  - {ko: 옥스퍼드, en: [oxford]}
+  - {ko: 정체, en: [where, gatsby, oxford]}
+  - {ko: 어디, en: [where]}
+  - {ko: 미소, en: [smile, smiled]}
+  - {ko: 웃음, en: [smile, laughter]}
+  - {ko: 드레스, en: [gown, dress]}
+  - {ko: 선물, en: [package, gown]}
+  - {ko: 비행기, en: [hydroplane]}
+  - {ko: 수상비행기, en: [hydroplane]}
+  - {ko: 비밀, en: [amazing, swore, tell, alone]}
+  - {ko: 집사, en: [butler]}
+  - {ko: 작별, en: [farewell, night]}
+  - {ko: 혼자, en: [alone, isolation]}
+  - {ko: 외로, en: [alone, isolation, lonely]}
+  - {ko: 계단, en: [steps, marble]}
+  - {ko: 골프, en: [golf, tournament]}
+  - {ko: 저택, en: [house, mansion]}
+  - {ko: 집, en: [house]}

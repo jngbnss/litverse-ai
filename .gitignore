@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+
+# Local data / secrets
+.env
+*.sqlite
+*.db
+
+# 모델 가중치·인덱스는 저장소에 넣지 않는다
+models/
+*.gguf
+*.faiss
+
+# 원문 소스 파일 (PG 전문은 저장하지 않음, tools/extract_passages.py 입력용)
+pg*.txt
+
+# IDE
+.idea/
+.vscode/

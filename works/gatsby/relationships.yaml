@@ -1,0 +1,22 @@
+# revealed_at: 이 관계가 관계도에 공개되는 시점. kind: canon | interpretation
+relationships:
+  - {relation_id: r-nick-neighbor-gatsby, source: nick, target: gatsby, type: neighbor, label_ko: 이웃,
+     kind: canon, passage_ids: [gatsby-ch03-p008], revealed_at: t03-party-evening}
+  - {relation_id: r-gatsby-invites-nick, source: gatsby, target: nick, type: invites, label_ko: 초대,
+     kind: canon, passage_ids: [gatsby-ch03-p008], revealed_at: t03-party-evening}
+  - {relation_id: r-nick-knows-jordan, source: nick, target: jordan, type: acquaintance, label_ko: 아는 사이,
+     kind: canon, passage_ids: [gatsby-ch03-p014], revealed_at: t03-party-evening}
+  - {relation_id: r-war-comrades, source: gatsby, target: nick, type: same_division, label_ko: 같은 제1사단,
+     kind: canon, passage_ids: [gatsby-ch03-p062, gatsby-ch03-p063], revealed_at: t03-party-midnight}
+  - {relation_id: r-jordan-doubts-gatsby, source: jordan, target: gatsby, type: doubts, label_ko: 옥스퍼드 이야기를 믿지 않음,
+     kind: canon, passage_ids: [gatsby-ch03-p083, gatsby-ch03-p085], revealed_at: t03-party-late}
+  - {relation_id: r-gatsby-confides-jordan, source: gatsby, target: jordan, type: confides, label_ko: 비밀을 털어놓음,
+     kind: canon, passage_ids: [gatsby-ch03-p096, gatsby-ch03-p111, gatsby-ch03-p113], revealed_at: t03-party-end}
+  - {relation_id: r-nick-observes-gatsby, source: nick, target: gatsby, type: observer, label_ko: 관찰자,
+     kind: interpretation, passage_ids: [gatsby-ch03-p093, gatsby-ch03-p153], revealed_at: t03-party-end}
+  - {relation_id: r-gatsby-loves-daisy, source: gatsby, target: daisy, type: love, label_ko: 사랑,
+     kind: canon, passage_ids: [gatsby-ch04-p138, gatsby-ch04-p157], revealed_at: t04-plaza-tea}
+  - {relation_id: r-jordan-friend-daisy, source: jordan, target: daisy, type: friend, label_ko: 친구,
+     kind: canon, passage_ids: [gatsby-ch04-p138, gatsby-ch04-p140], revealed_at: t04-plaza-tea}
+  - {relation_id: r-tom-married-daisy, source: tom, target: daisy, type: married, label_ko: 결혼,
+     kind: canon, passage_ids: [gatsby-ch04-p140], revealed_at: t04-plaza-tea}

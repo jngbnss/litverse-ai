@@ -1,0 +1,24 @@
+# 데이터셋에 원문이 없는 미래 사건. from_point 이전 시점의 인물이 말하면 누설이다.
+# 근거 문단이 없으므로 CANON 주장의 근거로 쓸 수 없다.
+spoilers:
+  - spoiler_id: s-reunion
+    from_point: t05-reunion
+    description_ko: 닉의 집에서 개츠비와 데이지가 다시 만난다.
+    leak_terms: ["재회", "reunion", "다시 만나&데이지", "meets Daisy again"]
+  - spoiler_id: s-plaza-confrontation
+    from_point: t07-plaza-confrontation
+    description_ko: 플라자 호텔에서 톰과 개츠비가 데이지를 두고 충돌한다.
+    leak_terms: ["톰과 개츠비&충돌", "Tom confronts", "플라자&충돌"]
+  - spoiler_id: s-accident
+    from_point: t07-accident
+    description_ko: 귀갓길에 개츠비의 차가 사람을 치는 사고가 난다.
+    leak_terms: ["머틀이 죽", "Myrtle dies", "Myrtle's death", "차에 치", "hit by the car", "교통사고"]
+  - spoiler_id: s-gatsby-death
+    from_point: t08-pool
+    description_ko: 개츠비가 수영장에서 총에 맞아 죽는다.
+    # "개츠비가 죽였다는 소문"과 구분하려고 어미까지 적는다.
+    leak_terms: ["개츠비가 죽어", "개츠비가 죽는", "개츠비가 죽었", "개츠비는 죽", "개츠비의 죽음", "Gatsby dies", "Gatsby's death", "Gatsby is shot", "총에 맞", "수영장에서 죽"]
+  - spoiler_id: s-funeral
+    from_point: t09-funeral
+    description_ko: 개츠비의 장례식에는 거의 아무도 오지 않는다.
+    leak_terms: ["장례식", "funeral"]

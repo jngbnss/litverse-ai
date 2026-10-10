@@ -1,0 +1,24 @@
+work_id: gatsby
+title: The Great Gatsby
+title_ko: 위대한 개츠비
+author: F. Scott Fitzgerald
+published: 1925
+language: en
+summary_ko: >-
+  1922년 여름 롱아일랜드. 화자 닉 캐러웨이는 웨스트에그에서 거대한 저택의 주인
+  개츠비의 이웃으로 살게 된다. 매주 열리는 화려한 파티와 정체를 둘러싼 소문 속에서
+  닉은 개츠비라는 인물을 조금씩 알아 간다. (팀 작성 요약)
+source:
+  name: Project Gutenberg
+  url: https://www.gutenberg.org/ebooks/64317
+  edition: eBook #64317 (Standard Ebooks 기반 전사), 2025-01-26 갱신본
+  retrieved: "2026-10-11"
+license:
+  status: verified
+  jurisdictions:
+    US: verified
+    KR: verified
+  note: >-
+    원문만 사용한다. PG 헤더·푸터·상표 문구는 저장하지 않는다.
+    상세 근거는 docs/copyright-review.md 참조.
+default_scene: ch03-party

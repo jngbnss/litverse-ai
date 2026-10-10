@@ -1,0 +1,64 @@
+# 문단 큐레이션 원본. 사람이 이 파일을 편집하고
+#   uv run --project backend python tools/extract_passages.py <pg64317.txt> works/gatsby
+# 로 passages.jsonl을 다시 만든다. 원문 텍스트는 이 파일에 넣지 않는다.
+#
+# para: Project Gutenberg #64317의 해당 장 안에서 빈 줄로 나눈 문단 번호 (1부터)
+# characters: 그 문단의 사건을 직접 겪거나 본 인물 (지식 필터의 기준)
+# mentions: 언급만 되는 인물
+# narrative_layer: in_scene | summary | retrospective
+
+defaults:
+  work_id: gatsby
+  location: gatsby-mansion
+
+chapters:
+  3:
+    - {para: 1, timeline_point: t03-summer-general, narrative_layer: summary, characters: [nick, gatsby], topics: [wealth, spectacle]}
+    - {para: 2, timeline_point: t03-summer-general, narrative_layer: summary, characters: [nick, gatsby], topics: [wealth, waste]}
+    - {para: 3, timeline_point: t03-summer-general, narrative_layer: summary, characters: [nick, gatsby], topics: [wealth, spectacle]}
+    - {para: 4, timeline_point: t03-summer-general, narrative_layer: summary, characters: [nick, gatsby], topics: [spectacle, music]}
+    - {para: 7, timeline_point: t03-summer-general, narrative_layer: summary, characters: [nick], mentions: [gatsby], topics: [invitation, anonymity]}
+    - {para: 8, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick], mentions: [gatsby], topics: [invitation], location: nick-house}
+    - {para: 10, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick], mentions: [gatsby], topics: [anonymity, loneliness]}
+    - {para: 11, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], topics: [class]}
+    - {para: 14, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], topics: [acquaintance]}
+    - {para: 19, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], topics: [anonymity]}
+    - {para: 23, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [wealth, generosity]}
+    - {para: 28, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [rumor]}
+    - {para: 30, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [rumor, identity]}
+    - {para: 32, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [rumor, identity, war]}
+    - {para: 35, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [rumor, identity, war]}
+    - {para: 36, timeline_point: t03-party-evening, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [rumor, romance]}
+    - {para: 40, timeline_point: t03-party-supper, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [wealth, display], location: gatsby-library}
+    - {para: 41, timeline_point: t03-party-supper, narrative_layer: in_scene, characters: [nick, jordan, owl-eyes], topics: [display], location: gatsby-library}
+    - {para: 45, timeline_point: t03-party-supper, narrative_layer: in_scene, characters: [nick, jordan, owl-eyes], speakers: [owl-eyes], topics: [display, authenticity], location: gatsby-library}
+    - {para: 48, timeline_point: t03-party-supper, narrative_layer: in_scene, characters: [nick, jordan, owl-eyes], speakers: [owl-eyes], topics: [display, authenticity], location: gatsby-library}
+    - {para: 50, timeline_point: t03-party-supper, narrative_layer: in_scene, characters: [nick, jordan, owl-eyes], speakers: [owl-eyes], mentions: [gatsby], topics: [display, authenticity, performance], location: gatsby-library}
+    - {para: 59, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, jordan], topics: [spectacle, music]}
+    - {para: 62, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, jordan, gatsby], speakers: [gatsby], topics: [war, acquaintance]}
+    - {para: 63, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, jordan, gatsby], speakers: [nick], topics: [war]}
+    - {para: 66, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, jordan, gatsby], speakers: [gatsby], topics: [wealth, hospitality]}
+    - {para: 71, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, jordan, gatsby], speakers: [nick], topics: [invitation, anonymity]}
+    - {para: 73, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, jordan, gatsby], speakers: [gatsby], topics: [identity, reveal]}
+    - {para: 75, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, jordan, gatsby], speakers: [gatsby], topics: [identity, hospitality]}
+    - {para: 76, timeline_point: t03-party-midnight, narrative_layer: in_scene, characters: [nick, gatsby], topics: [identity, performance, charm]}
+    - {para: 80, timeline_point: t03-party-late, narrative_layer: in_scene, characters: [nick, jordan], speakers: [nick], mentions: [gatsby], topics: [identity]}
+    - {para: 83, timeline_point: t03-party-late, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], mentions: [gatsby], topics: [identity, rumor]}
+    - {para: 85, timeline_point: t03-party-late, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], mentions: [gatsby], topics: [identity, rumor]}
+    - {para: 88, timeline_point: t03-party-late, narrative_layer: in_scene, characters: [nick], mentions: [gatsby, jordan], topics: [identity, class, rumor]}
+    - {para: 93, timeline_point: t03-party-late, narrative_layer: in_scene, characters: [nick], mentions: [gatsby], topics: [isolation, identity, performance]}
+    - {para: 96, timeline_point: t03-party-late, narrative_layer: in_scene, characters: [nick, jordan], mentions: [gatsby], topics: [secret]}
+    - {para: 111, timeline_point: t03-party-end, narrative_layer: in_scene, characters: [nick, jordan, gatsby], topics: [secret, performance], location: gatsby-hall}
+    - {para: 113, timeline_point: t03-party-end, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], mentions: [gatsby], topics: [secret], location: gatsby-hall}
+    - {para: 115, timeline_point: t03-party-end, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], topics: [secret], location: gatsby-hall}
+    - {para: 117, timeline_point: t03-party-end, narrative_layer: in_scene, characters: [nick, gatsby], speakers: [gatsby], topics: [hospitality]}
+    - {para: 123, timeline_point: t03-party-end, narrative_layer: in_scene, characters: [nick], topics: [carelessness, chaos], location: gatsby-drive}
+    - {para: 137, timeline_point: t03-party-end, narrative_layer: in_scene, characters: [nick, owl-eyes], speakers: [owl-eyes], topics: [carelessness], location: gatsby-drive}
+    - {para: 153, timeline_point: t03-party-end, narrative_layer: in_scene, characters: [nick], mentions: [gatsby], topics: [isolation], location: gatsby-drive}
+    - {para: 160, timeline_point: t03-midsummer, narrative_layer: retrospective, characters: [nick, jordan], topics: [dishonesty, carelessness], location: new-york}
+    - {para: 170, timeline_point: t03-midsummer, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], topics: [carelessness], location: warwick}
+  4:
+    - {para: 138, timeline_point: t04-plaza-tea, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], mentions: [gatsby, daisy], topics: [love, past], location: plaza-hotel}
+    - {para: 140, timeline_point: t04-plaza-tea, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], mentions: [daisy, tom], topics: [marriage, wealth, past], location: plaza-hotel}
+    - {para: 157, timeline_point: t04-plaza-tea, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], mentions: [gatsby, daisy], topics: [love, wealth], location: central-park}
+    - {para: 159, timeline_point: t04-plaza-tea, narrative_layer: in_scene, characters: [nick, jordan], speakers: [jordan], mentions: [gatsby, daisy], topics: [love, secret], location: central-park}

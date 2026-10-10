@@ -1,0 +1,142 @@
+# canon: 원문에서 직접 확인되는 사실. interpretation: 팀이 쓴 해석 (근거 문단 필수).
+# leak_terms: 이 사실을 모르는(또는 숨겨야 하는) 인물이 말하면 누설로 보는 표현.
+#   "A&B"는 A와 B가 모두 나올 때만 해당한다. 대소문자를 구분하지 않는다.
+facts:
+  - fact_id: f-nick-invited
+    kind: canon
+    statement_ko: 닉은 개츠비의 운전사가 전한 쪽지로 정식 초대를 받은 드문 손님이다.
+    passage_ids: [gatsby-ch03-p007, gatsby-ch03-p008]
+
+  - fact_id: f-oranges
+    kind: canon
+    statement_ko: 금요일마다 오렌지와 레몬 다섯 상자가 들어오고, 월요일이면 과육 없는 반쪽 더미가 되어 나간다.
+    passage_ids: [gatsby-ch03-p002]
+
+  - fact_id: f-rumor-killed-man
+    kind: canon
+    statement_ko: 노란 드레스를 입은 손님은 개츠비가 사람을 죽였다는 말을 들었다고 한다.
+    passage_ids: [gatsby-ch03-p030, gatsby-ch03-p035]
+
+  - fact_id: f-rumor-german-spy
+    kind: canon
+    statement_ko: 루실은 개츠비가 전쟁 중 독일 스파이였다는 소문을 말한다.
+    passage_ids: [gatsby-ch03-p032]
+
+  - fact_id: f-rumor-american-army
+    kind: canon
+    statement_ko: 다른 손님은 개츠비가 전쟁 때 미군에 있었다며 스파이설을 반박한다.
+    passage_ids: [gatsby-ch03-p035]
+
+  - fact_id: f-gown-gift
+    kind: canon
+    statement_ko: 루실은 파티에서 드레스가 찢어진 뒤 개츠비에게서 새 이브닝드레스를 받았다.
+    passage_ids: [gatsby-ch03-p023]
+
+  - fact_id: f-real-books
+    kind: canon
+    statement_ko: 서재의 책은 진짜지만, 페이지는 잘려 있지 않다. (올빼미 눈 남자의 관찰)
+    passage_ids: [gatsby-ch03-p045, gatsby-ch03-p048, gatsby-ch03-p050]
+
+  - fact_id: f-first-division
+    kind: canon
+    statement_ko: 개츠비와 닉은 전쟁 중 같은 제1사단에 있었다. 개츠비는 16연대, 닉은 28보병연대.
+    passage_ids: [gatsby-ch03-p062, gatsby-ch03-p063]
+
+  - fact_id: f-gatsby-reveal
+    kind: canon
+    statement_ko: 닉은 대화하던 남자가 자신을 "개츠비"라고 밝힐 때까지 그가 주인인 줄 몰랐다.
+    passage_ids: [gatsby-ch03-p071, gatsby-ch03-p073]
+
+  - fact_id: f-oxford-claim
+    kind: canon
+    statement_ko: 개츠비는 조던에게 옥스퍼드 출신이라고 말했지만, 조던은 그 말을 믿지 않는다.
+    passage_ids: [gatsby-ch03-p083, gatsby-ch03-p085]
+
+  - fact_id: f-gatsby-not-drinking
+    kind: canon
+    statement_ko: 개츠비는 계단에 홀로 서서 손님들을 지켜보고, 술을 마시지 않는 것처럼 보인다.
+    passage_ids: [gatsby-ch03-p093]
+
+  - fact_id: f-jordan-summoned
+    kind: canon
+    statement_ko: 개츠비의 집사가 조던을 불러 개츠비가 따로 이야기하고 싶어 한다고 전한다.
+    passage_ids: [gatsby-ch03-p096]
+
+  - fact_id: f-jordan-sworn
+    kind: canon
+    statement_ko: 조던은 서재에서 "놀라운 이야기"를 들었지만, 말하지 않겠다고 맹세했다.
+    passage_ids: [gatsby-ch03-p113, gatsby-ch03-p115]
+
+  - fact_id: f-hydroplane
+    kind: canon
+    statement_ko: 개츠비는 닉에게 다음 날 아침 아홉 시에 수상비행기를 같이 타자고 한다.
+    passage_ids: [gatsby-ch03-p066, gatsby-ch03-p117]
+
+  - fact_id: f-ditch-coupe
+    kind: canon
+    statement_ko: 파티가 끝날 때 바퀴가 빠진 쿠페가 도랑에 박혀 있고, 운전한 사람은 따로 있었다.
+    passage_ids: [gatsby-ch03-p123, gatsby-ch03-p137]
+
+  - fact_id: f-gatsby-farewell
+    kind: canon
+    statement_ko: 손님이 모두 떠난 뒤 개츠비는 현관에 홀로 서서 격식 있게 작별 인사를 한다.
+    passage_ids: [gatsby-ch03-p153]
+
+  - fact_id: f-jordan-dishonest
+    kind: canon
+    statement_ko: 한여름에 닉은 조던이 골프 시합에서 공을 옮겼다는 추문을 떠올리고, 그녀를 정직하지 않다고 본다.
+    passage_ids: [gatsby-ch03-p160]
+    leak_terms: ["공을 옮", "moved her ball", "부정직", "dishonest"]
+
+  - fact_id: f-gatsby-daisy-1917
+    kind: canon
+    statement_ko: 1917년 루이빌에서 조던은 데이지가 젊은 장교 제이 개츠비와 함께 있는 것을 보았다.
+    passage_ids: [gatsby-ch04-p138]
+    leak_terms: ["루이빌", "Louisville", "1917", "데이지&장교", "Daisy&officer", "데이지&사랑", "Daisy&love"]
+
+  - fact_id: f-daisy-married-tom
+    kind: canon
+    statement_ko: 데이지는 루이빌에서 시카고의 톰 뷰캐넌과 결혼했고, 조던이 신부 들러리였다.
+    passage_ids: [gatsby-ch04-p140]
+
+  - fact_id: f-house-across-bay
+    kind: canon
+    statement_ko: 개츠비는 데이지가 만 건너편에 있도록 그 저택을 샀다.
+    passage_ids: [gatsby-ch04-p157]
+    leak_terms: ["만 건너", "across the bay", "데이지&저택", "Daisy&house"]
+
+  - fact_id: f-gatsby-request
+    kind: canon
+    statement_ko: 개츠비는 닉이 데이지를 자기 집에 초대하고 자신이 들를 수 있게 해 달라고 부탁하려 한다.
+    passage_ids: [gatsby-ch04-p159]
+    leak_terms: ["데이지&초대", "invite Daisy", "데이지를 불러"]
+
+  - fact_id: i-rumor-as-mirror
+    kind: interpretation
+    statement_ko: 소문은 개츠비에 대한 사실보다, 그를 채워 넣고 싶어 하는 손님들의 상상을 보여 준다고 해석할 수 있다.
+    passage_ids: [gatsby-ch03-p036, gatsby-ch03-p088]
+    perspectives: [nick]
+
+  - fact_id: i-books-uncut
+    kind: interpretation
+    statement_ko: 진짜지만 읽히지 않은 책은, 진짜처럼 공들인 개츠비의 연출이 아직 '쓰이지 않은' 상태임을 암시한다고 읽을 수 있다.
+    passage_ids: [gatsby-ch03-p050]
+    perspectives: [owl-eyes, nick]
+
+  - fact_id: i-host-isolation
+    kind: interpretation
+    statement_ko: 수백 명이 오가는 파티의 주인이 가장 고립되어 보인다는 대비가 이 장의 핵심 이미지라고 볼 수 있다.
+    passage_ids: [gatsby-ch03-p093, gatsby-ch03-p153]
+    perspectives: [nick]
+
+  - fact_id: i-smile-performance
+    kind: interpretation
+    statement_ko: 닉이 묘사한 개츠비의 미소는 진심 어린 공감인 동시에 잘 다듬어진 연기일 가능성이 있다.
+    passage_ids: [gatsby-ch03-p076]
+    perspectives: [nick]
+
+  - fact_id: i-carelessness
+    kind: interpretation
+    statement_ko: 도랑에 빠진 차와 "운전하지도 않았다"는 변명은 책임지지 않는 부주의를 보여 주는 장면으로 읽을 수 있다.
+    passage_ids: [gatsby-ch03-p123, gatsby-ch03-p137]
+    perspectives: [nick]

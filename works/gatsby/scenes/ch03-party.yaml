@@ -1,0 +1,53 @@
+scene_id: ch03-party
+work_id: gatsby
+title_ko: 3장 · 개츠비의 첫 파티
+chapter: 3
+location: gatsby-mansion
+# 사용자가 체험하는 '현재 시점'. 이 시점보다 뒤의 일은 인물이 알 수 없다.
+now: t03-party-end
+characters: [nick, gatsby, jordan]
+
+objects:
+  - object_id: invitation
+    name_ko: 초대 쪽지
+    description_ko: 푸른 제복의 운전사가 아침에 전해 준 격식 있는 쪽지.
+    passage_ids: [gatsby-ch03-p007, gatsby-ch03-p008]
+    hotspot: {x: 12, y: 70}
+  - object_id: fruit-crates
+    name_ko: 오렌지·레몬 상자
+    description_ko: 부엌 뒷문 옆에 쌓인 과일 상자와 즙 짜는 기계.
+    passage_ids: [gatsby-ch03-p002]
+    hotspot: {x: 82, y: 72}
+  - object_id: library-books
+    name_ko: 서재의 책
+    description_ko: 고딕풍 서재의 책장. 한 손님이 책이 진짜인지 확인하고 있다.
+    passage_ids: [gatsby-ch03-p045, gatsby-ch03-p048, gatsby-ch03-p050]
+    hotspot: {x: 30, y: 35}
+  - object_id: orchestra
+    name_ko: 오케스트라와 칵테일
+    description_ko: 정원 한쪽의 대규모 악단과 떠다니는 칵테일 쟁반.
+    passage_ids: [gatsby-ch03-p004, gatsby-ch03-p059]
+    hotspot: {x: 58, y: 48}
+  - object_id: ditch-coupe
+    name_ko: 도랑에 빠진 쿠페
+    description_ko: 저택 앞길, 바퀴 하나가 떨어져 나간 새 차.
+    passage_ids: [gatsby-ch03-p123, gatsby-ch03-p137]
+    hotspot: {x: 90, y: 88}
+
+dialogue_goals:
+  - {character_id: jordan, goal_ko: 손님들이 개츠비를 두고 하는 소문을 들어 보기}
+  - {character_id: gatsby, goal_ko: 개츠비와 전쟁 시절 이야기를 나누기}
+  - {character_id: nick, goal_ko: 오늘 밤 개츠비에게서 받은 인상을 정리하기}
+
+branches:
+  - branch_id: w-nick-asks-rumor
+    title_ko: 닉이 소문을 직접 묻는다면?
+    premise_ko: >-
+      개츠비가 정체를 밝힌 직후, 닉이 "사람을 죽였다는 소문이 있던데요"라고 그에게 직접 묻는다.
+    diverges_at: t03-party-midnight
+    affected_characters: [nick, gatsby, jordan]
+
+discussion_questions_ko:
+  - 손님들의 소문은 개츠비에 대해 무엇을 알려 주고, 손님들 자신에 대해서는 무엇을 알려 주는가?
+  - 진짜지만 페이지가 잘리지 않은 책은 개츠비의 어떤 면을 닮았는가?
+  - 수백 명이 모인 파티의 끝에서 개츠비가 홀로 서 있는 장면을 어떻게 읽을 수 있는가?

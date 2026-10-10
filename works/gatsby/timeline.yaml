@@ -1,0 +1,18 @@
+# ordinal이 작을수록 이른 시점이다. 지식 필터와 미래 누설 검사의 기준.
+points:
+  - {point_id: t-1917-louisville, ordinal: 1, label_ko: "1917년 루이빌 (과거)"}
+  - {point_id: t01-buchanan-dinner, ordinal: 10, label_ko: "뷰캐넌 저택 저녁 식사", chapter: 1}
+  - {point_id: t02-new-york-apartment, ordinal: 20, label_ko: "뉴욕 아파트 파티", chapter: 2}
+  - {point_id: t03-summer-general, ordinal: 29, label_ko: "그해 여름 파티들 (요약)", chapter: 3}
+  - {point_id: t03-party-evening, ordinal: 30, label_ko: "첫 파티 · 저녁 7시 무렵", chapter: 3}
+  - {point_id: t03-party-supper, ordinal: 31, label_ko: "첫 파티 · 첫 만찬", chapter: 3}
+  - {point_id: t03-party-midnight, ordinal: 32, label_ko: "첫 파티 · 자정", chapter: 3}
+  - {point_id: t03-party-late, ordinal: 33, label_ko: "첫 파티 · 새벽 2시 무렵", chapter: 3}
+  - {point_id: t03-party-end, ordinal: 34, label_ko: "첫 파티 · 파티가 끝날 무렵", chapter: 3}
+  - {point_id: t03-midsummer, ordinal: 40, label_ko: "한여름 (회고)", chapter: 3}
+  - {point_id: t04-plaza-tea, ordinal: 50, label_ko: "플라자 호텔 티가든", chapter: 4}
+  - {point_id: t05-reunion, ordinal: 60, label_ko: "닉의 집에서의 재회", chapter: 5}
+  - {point_id: t07-plaza-confrontation, ordinal: 70, label_ko: "플라자 호텔 대립", chapter: 7}
+  - {point_id: t07-accident, ordinal: 71, label_ko: "귀갓길 사고", chapter: 7}
+  - {point_id: t08-pool, ordinal: 80, label_ko: "수영장", chapter: 8}
+  - {point_id: t09-funeral, ordinal: 90, label_ko: "장례식", chapter: 9}
