@@ -1,4 +1,4 @@
-# frontend 설계 (3단계에서 구현)
+# frontend 설계
 
 React · TypeScript · Vite · Zustand · CSS Modules · vitest
 
@@ -12,8 +12,8 @@ React · TypeScript · Vite · Zustand · CSS Modules · vitest
 
 ```
 src/
-  app/            라우팅, 레이아웃, 전역 테마
-  components/     Badge(원작/해석/WHAT-IF), CitationCard, Portrait, Panel
+  app/            App 셸(헤더·탭·모드 배너), 전역 테마 토큰 (라우터 없이 store.screen으로 전환)
+  components/     Badge(원작/해석/WHAT-IF), CitationList, Portrait(자체 SVG), ui.module.css
   features/
     works/          화면 1: 작품 선택
     world/          화면 2: 탐험 (2.5D 정원, 핫스팟)
@@ -22,7 +22,7 @@ src/
     what-if/        화면 5: 가상 분기
     report/         화면 6: 탐험 기록
   services/       api.ts (REST), dialogueSocket.ts (WebSocket)
-  store/          Zustand: session, discoveries, dialogue, branch
+  store/          session.ts (Zustand): screen, session, discoveries, turns, branch
   types/          백엔드 스키마와 같은 타입
 tests/            vitest + Testing Library
 ```
@@ -45,6 +45,16 @@ tests/            vitest + Testing Library
 5. 분기: `POST /sessions/{id}/branches` → 화면 전체 보라 테두리, `AI WHAT-IF` 배지 상시 표시
 6. 기록: `GET /sessions/{id}/report` → 사실 / 해석 / 분기 3열, 토론 질문
 
+## 실행
+
+```bash
+cd frontend
+npm install
+npm run dev        # http://localhost:5173, /api는 127.0.0.1:8000으로 프록시
+npm test           # vitest
+npm run build      # 타입 검사 + 빌드
+```
+
 ## 검증 (3단계 스모크)
 
-`tsc --noEmit` · `vitest run` · `vite build` · 백엔드와 연결한 시나리오 확인
+`tsc --noEmit` · `vitest run` · `vite build` · uvicorn + `vite preview`로 프록시를 거친 REST·WebSocket 시나리오

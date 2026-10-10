@@ -8,8 +8,15 @@
 """
 
 import argparse
+import json
+import os
+import shutil
+import subprocess
 import sys
+import time
+import urllib.request
 from collections.abc import Callable
+from pathlib import Path
 
 from app.ai.schemas import CharacterReply, Claim
 from app.canon.guard import check_reply, safe_reply
@@ -127,7 +134,97 @@ def stage2() -> None:
     )
 
 
-STAGES: dict[int, Callable[[], None]] = {1: stage1, 2: stage2}
+REPO = Path(__file__).resolve().parents[1]
+
+
+def _run(cmd: list[str], cwd: Path) -> None:
+    exe = shutil.which(cmd[0]) or cmd[0]
+    r = subprocess.run([exe, *cmd[1:]], cwd=cwd, capture_output=True, text=True, encoding="utf-8")
+    assert r.returncode == 0, f"{' '.join(cmd)} failed:\n{r.stdout[-2000:]}\n{r.stderr[-2000:]}"
+
+
+def _wait(url: str, timeout: float = 30.0) -> None:
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        try:
+            with urllib.request.urlopen(url, timeout=2) as resp:
+                if resp.status == 200:
+                    return
+        except OSError:
+            time.sleep(0.4)
+    raise AssertionError(f"timeout waiting for {url}")
+
+
+def _http(method: str, url: str, body: dict | None = None) -> dict:
+    data = json.dumps(body).encode() if body is not None else None
+    req = urllib.request.Request(url, data=data, method=method,
+                                 headers={"Content-Type": "application/json"})  # fmt: skip
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        return json.loads(resp.read())
+
+
+def stage3() -> None:
+    frontend = REPO / "frontend"
+    for cmd in (["npm", "run", "typecheck"], ["npm", "test"], ["npm", "run", "build"]):
+        _run(cmd, frontend)
+        print(f"  {' '.join(cmd)}: ok")
+
+    env = {**os.environ, "LITVERSE_LLM": "mock", "LITVERSE_DATABASE_URL": "sqlite://",
+           "LITVERSE_BACKEND": "http://127.0.0.1:8766"}  # fmt: skip
+    procs = [
+        subprocess.Popen(
+            [sys.executable, "-m", "uvicorn", "--factory", "app.main:create_app", "--port", "8766"],
+            cwd=REPO / "backend", env=env,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        ),
+        subprocess.Popen(
+            [shutil.which("npx") or "npx", "vite", "preview", "--host", "127.0.0.1", "--port", "4174", "--strictPort"],
+            cwd=frontend, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        ),
+    ]  # fmt: skip
+    try:
+        web = "http://127.0.0.1:4174"
+        _wait(f"{web}/")
+        _wait(f"{web}/api/health")
+        with urllib.request.urlopen(f"{web}/") as resp:
+            assert b'<div id="root">' in resp.read()
+        print("  vite preview → index.html, /api proxy ok")
+
+        sid = _http("POST", f"{web}/api/sessions",
+                    {"work_id": "gatsby", "scene_id": "ch03-party"})["session_id"]  # fmt: skip
+        _http("POST", f"{web}/api/sessions/{sid}/inspect/library-books")
+
+        import asyncio
+
+        import websockets
+
+        async def ask() -> dict:
+            async with websockets.connect(f"ws://127.0.0.1:4174/api/sessions/{sid}/ws") as ws:
+                await ws.send(
+                    json.dumps({"character_id": "nick", "question": "서재의 책은 진짜야?"})
+                )
+                events = [json.loads(await ws.recv()) for _ in range(3)]
+            assert [e["type"] for e in events] == ["thinking", "reply", "done"], events
+            return events[1]
+
+        reply = asyncio.run(ask())
+        assert reply["consistent"] and reply["citations"]
+        print(f"  websocket via proxy: {reply['reply'][:40]}…")
+
+        _http("POST", f"{web}/api/sessions/{sid}/branches", {"option_id": "w-nick-asks-rumor"})
+        assert _http("GET", f"{web}/api/sessions/{sid}")["mode"] == "what_if"
+        rep = _http("GET", f"{web}/api/sessions/{sid}/report")
+        assert rep["canon"]["facts"] and rep["what_if"]
+        print("  branch + report via proxy ok")
+    finally:
+        for p in procs:
+            if os.name == "nt":
+                subprocess.run(["taskkill", "/F", "/T", "/PID", str(p.pid)], capture_output=True)
+            else:
+                p.terminate()
+
+
+STAGES: dict[int, Callable[[], None]] = {1: stage1, 2: stage2, 3: stage3}
 
 
 def main() -> int:

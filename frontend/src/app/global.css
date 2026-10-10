@@ -1,0 +1,122 @@
+:root {
+  --bg: #f6f1e7;
+  --surface: #fffaf0;
+  --surface-2: #efe6d4;
+  --text: #1d1a16;
+  --muted: #6b6255;
+  --line: #d8cbb2;
+  --accent: #8a6a1f;
+  --accent-soft: #f1e2b8;
+  --canon: #1f7a4d;
+  --canon-soft: #dcf1e5;
+  --interp: #9a6b00;
+  --interp-soft: #fbecc4;
+  --whatif: #6b3fb5;
+  --whatif-soft: #ebe0fa;
+  --danger: #b3261e;
+  --night-1: #1b2a4a;
+  --night-2: #3a4f7a;
+  --lawn: #3e6b4a;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 12px rgb(0 0 0 / 0.06);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141b;
+    --surface: #1a1d27;
+    --surface-2: #232736;
+    --text: #ece6da;
+    --muted: #a39b8c;
+    --line: #343a4d;
+    --accent: #d9b45a;
+    --accent-soft: #3a3220;
+    --canon: #5fcf95;
+    --canon-soft: #1b3428;
+    --interp: #e7b84a;
+    --interp-soft: #3a2f14;
+    --whatif: #b493f0;
+    --whatif-soft: #2d2343;
+    --danger: #ff8a80;
+    --night-1: #0b1222;
+    --night-2: #1e2d4f;
+    --lawn: #24402d;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 16px rgb(0 0 0 / 0.3);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #12141b;
+  --surface: #1a1d27;
+  --surface-2: #232736;
+  --text: #ece6da;
+  --muted: #a39b8c;
+  --line: #343a4d;
+  --accent: #d9b45a;
+  --accent-soft: #3a3220;
+  --canon: #5fcf95;
+  --canon-soft: #1b3428;
+  --interp: #e7b84a;
+  --interp-soft: #3a2f14;
+  --whatif: #b493f0;
+  --whatif-soft: #2d2343;
+  --danger: #ff8a80;
+  --night-1: #0b1222;
+  --night-2: #1e2d4f;
+  --lawn: #24402d;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    "Pretendard", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  margin: 0 0 0.5em;
+}
+
+.serif {
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+}

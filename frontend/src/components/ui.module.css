@@ -1,0 +1,106 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.CANON {
+  color: var(--canon);
+  background: var(--canon-soft);
+  border-color: color-mix(in srgb, var(--canon) 30%, transparent);
+}
+
+.INTERPRETATION {
+  color: var(--interp);
+  background: var(--interp-soft);
+  border-color: color-mix(in srgb, var(--interp) 30%, transparent);
+}
+
+.WHAT_IF {
+  color: var(--whatif);
+  background: var(--whatif-soft);
+  border-color: color-mix(in srgb, var(--whatif) 35%, transparent);
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.button {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--surface);
+  font-weight: 600;
+}
+
+.primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.citations {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.citation {
+  border-left: 3px solid var(--line);
+  padding: 6px 10px;
+  background: var(--surface-2);
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+}
+
+.citation[data-type="CANON"] {
+  border-left-color: var(--canon);
+}
+
+.citation[data-type="INTERPRETATION"] {
+  border-left-color: var(--interp);
+}
+
+.citationMeta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.quote {
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-style: italic;
+}
+
+.portrait {
+  display: block;
+  border-radius: 50%;
+  background: var(--surface-2);
+  flex: none;
+}
