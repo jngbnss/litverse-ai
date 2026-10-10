@@ -48,22 +48,22 @@ uv run python ../tools/smoke.py
 
 스모크 기준: 데이터 무결성 오류 0개. 닉은 소문 문단을 검색하고 개츠비는 검색하지 못함. 근거 있는 답변은 통과하고, 조던의 비밀 누설은 차단됨.
 
-## 2단계 · 대화 백엔드 — `대기`
+## 2단계 · 대화 백엔드 — `진행중`
 
 목표: mock 모델로 "질문 → 근거 검색 → 생성 → 검증 → 답변"이 API로 동작한다. 시나리오 2·3·4·5·6·8·9.
 
 | ID | 작업 | 설계 요약 | 상태 |
 |---|---|---|---|
-| 2-1 | LLM 어댑터 | `LLMAdapter` Protocol. `MockLLM`(규칙 기반, 검색 결과로 CANON 주장 생성), `OllamaLLM`(Qwen3-8B, JSON 스키마 출력, httpx). 환경변수 `LITVERSE_LLM=mock\|ollama` | 대기 |
-| 2-2 | 프롬프트 빌더 | 인물 설정, 말투, 허용 문단(숨김 표시 포함), 모드 규칙을 조립한다. 원문은 `passage_id` 태그로 감싼다 | 대기 |
-| 2-3 | 대화 파이프라인 | 의도 분류(사실/해석/잡담/분기) → 지식 필터 검색 → 생성 → canon-guard → 실패 시 1회 재생성 → 안전 답변. 사용한 근거 ID를 모두 기록 | 대기 |
-| 2-4 | 세션 저장소 | SQLAlchemy + SQLite. `sessions`, `turns`, `discoveries`, `branch_events` 테이블. 원작 데이터는 DB에 넣지 않는다 | 대기 |
-| 2-5 | 관계 그래프 | NetworkX `MultiDiGraph`. `revealed_at <= now`인 간선만 공개. 노드·간선·근거를 JSON으로 출력 | 대기 |
-| 2-6 | 가상 분기 엔진 | 분기 = 원작 시점 스냅샷 id + 사용자 선택 이벤트. 분기 안의 답변은 `what_if` 모드. 원작 데이터 해시가 바뀌지 않았는지 검사 | 대기 |
-| 2-7 | REST API | FastAPI: `GET /works`, `GET /works/{id}`, `GET /works/{id}/scenes/{sid}`, `POST /sessions`, `POST /sessions/{id}/inspect/{object}`, `GET /sessions/{id}/graph`, `POST /sessions/{id}/branches`, `GET /sessions/{id}/report` | 대기 |
-| 2-8 | WebSocket 대화 | `WS /sessions/{id}/dialogue`. 이벤트: `thinking` → `reply`(검증된 전체 답변) → `done`. 검증 전 토큰은 보내지 않는다(D-011) | 대기 |
-| 2-9 | 탐험 기록 | 세션 로그에서 확인한 사실, 해석, 분기, 토론 질문을 집계 | 대기 |
-| 2-10 | 스모크 테스트 | stage 2: TestClient로 세션 생성 → 조사 → 대화(WS) → 관계도 → 분기 → 기록 | 대기 |
+| 2-1 | LLM 어댑터 | `LLMAdapter` Protocol. `MockLLM`(규칙 기반, 검색 결과로 CANON 주장 생성), `OllamaLLM`(Qwen3-8B, JSON 스키마 출력, httpx). 환경변수 `LITVERSE_LLM=mock\|ollama` | 진행중 |
+| 2-2 | 프롬프트 빌더 | 인물 설정, 말투, 허용 문단(숨김 표시 포함), 모드 규칙을 조립한다. 원문은 `passage_id` 태그로 감싼다 | 진행중 |
+| 2-3 | 대화 파이프라인 | 의도 분류(사실/해석/잡담/분기) → 지식 필터 검색 → 생성 → canon-guard → 실패 시 1회 재생성 → 안전 답변. 사용한 근거 ID를 모두 기록 | 진행중 |
+| 2-4 | 세션 저장소 | SQLAlchemy + SQLite. `sessions`, `turns`, `discoveries`, `branch_events` 테이블. 원작 데이터는 DB에 넣지 않는다 | 진행중 |
+| 2-5 | 관계 그래프 | NetworkX `MultiDiGraph`. `revealed_at <= now`인 간선만 공개. 노드·간선·근거를 JSON으로 출력 | 진행중 |
+| 2-6 | 가상 분기 엔진 | 분기 = 원작 시점 스냅샷 id + 사용자 선택 이벤트. 분기 안의 답변은 `what_if` 모드. 원작 데이터 해시가 바뀌지 않았는지 검사 | 진행중 |
+| 2-7 | REST API | FastAPI: `GET /works`, `GET /works/{id}`, `GET /works/{id}/scenes/{sid}`, `POST /sessions`, `POST /sessions/{id}/inspect/{object}`, `GET /sessions/{id}/graph`, `POST /sessions/{id}/branches`, `GET /sessions/{id}/report` | 진행중 |
+| 2-8 | WebSocket 대화 | `WS /sessions/{id}/dialogue`. 이벤트: `thinking` → `reply`(검증된 전체 답변) → `done`. 검증 전 토큰은 보내지 않는다(D-011) | 진행중 |
+| 2-9 | 탐험 기록 | 세션 로그에서 확인한 사실, 해석, 분기, 토론 질문을 집계 | 진행중 |
+| 2-10 | 스모크 테스트 | stage 2: TestClient로 세션 생성 → 조사 → 대화(WS) → 관계도 → 분기 → 기록 | 진행중 |
 
 스모크 기준: mock 모델로 11개 시나리오 중 2~6, 8~10이 API로 통과. 분기 뒤에도 원작 데이터 해시가 같음.
 
