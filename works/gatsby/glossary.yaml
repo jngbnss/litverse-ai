@@ -1,4 +1,7 @@
 # 한국어 질의 → 영어 원문 검색어 확장 (BM25 기준선용). 임베딩 검색이 붙으면 비교 실험 대상.
+# low_information: 장면 어디에나 나오는 단어. 이 단어만 겹친 문단은 근거로 보지 않는다 (E-001).
+low_information: [gatsby, party, parties, guests, people, house, mansion, night, man, old, sport]
+
 entries:
   - {ko: 개츠비, en: [gatsby]}
   - {ko: 조던, en: [jordan, baker]}
@@ -27,6 +30,9 @@ entries:
   - {ko: 술, en: [drinking, champagne, cocktails, drunk]}
   - {ko: 파티, en: [party, parties, guests]}
   - {ko: 손님, en: [guests, people]}
+  - {ko: 노란, en: [yellow]}
+  - {ko: 미군, en: [american, army]}
+  - {ko: 도착, en: [arrived]}
   - {ko: 차, en: [car, coupé, wheel, ditch]}
   - {ko: 자동차, en: [car, coupé, automobiles]}
   - {ko: 사고, en: [ditch, wheel, wreck]}

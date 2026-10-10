@@ -1,0 +1,30 @@
+{"case_id": "r01", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "개츠비가 사람을 죽였다는 소문이 있어?", "gold_passage_ids": ["gatsby-ch03-p030", "gatsby-ch03-p035"]}
+{"case_id": "r02", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "개츠비가 독일 스파이였다는 말이 있던데?", "gold_passage_ids": ["gatsby-ch03-p032"]}
+{"case_id": "r03", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "개츠비가 전쟁 때 미군에 있었다는 얘기는 뭐야?", "gold_passage_ids": ["gatsby-ch03-p035"]}
+{"case_id": "r04", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "서재의 책은 진짜야?", "gold_passage_ids": ["gatsby-ch03-p045", "gatsby-ch03-p048", "gatsby-ch03-p050"]}
+{"case_id": "r05", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "책의 페이지가 잘려 있었어?", "gold_passage_ids": ["gatsby-ch03-p050"]}
+{"case_id": "r06", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "오렌지와 레몬 상자는 어떻게 돼?", "gold_passage_ids": ["gatsby-ch03-p002"]}
+{"case_id": "r07", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "초대장은 누가 가져왔어?", "gold_passage_ids": ["gatsby-ch03-p008"]}
+{"case_id": "r08", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "개츠비는 옥스퍼드 출신이야?", "gold_passage_ids": ["gatsby-ch03-p083", "gatsby-ch03-p085"]}
+{"case_id": "r09", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "개츠비와 너는 같은 사단이었어?", "gold_passage_ids": ["gatsby-ch03-p062", "gatsby-ch03-p063"]}
+{"case_id": "r10", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "수상비행기를 타자고 한 사람은 누구야?", "gold_passage_ids": ["gatsby-ch03-p066", "gatsby-ch03-p117"]}
+{"case_id": "r11", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "도랑에 빠진 차는 누가 운전했어?", "gold_passage_ids": ["gatsby-ch03-p123", "gatsby-ch03-p137"]}
+{"case_id": "r12", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "파티가 끝나고 개츠비는 혼자 서 있었어?", "gold_passage_ids": ["gatsby-ch03-p153", "gatsby-ch03-p093"]}
+{"case_id": "r13", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "루실이 선물로 받은 드레스 이야기 해 줘", "gold_passage_ids": ["gatsby-ch03-p023"]}
+{"case_id": "r14", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "오케스트라는 언제 도착했어?", "gold_passage_ids": ["gatsby-ch03-p004"]}
+{"case_id": "r15", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "조던은 무슨 비밀 이야기를 들었대?", "gold_passage_ids": ["gatsby-ch03-p113", "gatsby-ch03-p115"]}
+{"case_id": "r16", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "집사는 왜 조던을 불렀어?", "gold_passage_ids": ["gatsby-ch03-p096"]}
+{"case_id": "r17", "lang": "ko", "character_id": "nick", "at": "t03-party-end", "question": "개츠비의 미소는 어땠어?", "gold_passage_ids": ["gatsby-ch03-p076"]}
+{"case_id": "r18", "lang": "ko", "character_id": "jordan", "at": "t03-party-end", "question": "개츠비가 옥스퍼드에 다녔다는 말을 믿어?", "gold_passage_ids": ["gatsby-ch03-p083", "gatsby-ch03-p085"]}
+{"case_id": "r19", "lang": "ko", "character_id": "jordan", "at": "t03-party-end", "question": "노란 드레스 아가씨들은 누구야?", "gold_passage_ids": ["gatsby-ch03-p019"]}
+{"case_id": "r20", "lang": "ko", "character_id": "gatsby", "at": "t03-party-end", "question": "전쟁 때 어느 사단에 있었어요?", "gold_passage_ids": ["gatsby-ch03-p062", "gatsby-ch03-p063"]}
+{"case_id": "r21", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "Who said Gatsby killed a man?", "gold_passage_ids": ["gatsby-ch03-p030", "gatsby-ch03-p035"]}
+{"case_id": "r22", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "Was Gatsby a German spy?", "gold_passage_ids": ["gatsby-ch03-p032"]}
+{"case_id": "r23", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "Are the books in the library real?", "gold_passage_ids": ["gatsby-ch03-p045", "gatsby-ch03-p048"]}
+{"case_id": "r24", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "What happens to the oranges and lemons?", "gold_passage_ids": ["gatsby-ch03-p002"]}
+{"case_id": "r25", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "Who was driving the car that went into the ditch?", "gold_passage_ids": ["gatsby-ch03-p137", "gatsby-ch03-p123"]}
+{"case_id": "r26", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "Did Gatsby go to Oxford?", "gold_passage_ids": ["gatsby-ch03-p083"]}
+{"case_id": "r27", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "What did the chauffeur bring that morning?", "gold_passage_ids": ["gatsby-ch03-p008"]}
+{"case_id": "r28", "lang": "en", "character_id": "gatsby", "at": "t03-party-end", "question": "Shall we go up in the hydroplane tomorrow?", "gold_passage_ids": ["gatsby-ch03-p066", "gatsby-ch03-p117"]}
+{"case_id": "r29", "lang": "en", "character_id": "jordan", "at": "t03-party-end", "question": "What amazing thing did you hear?", "gold_passage_ids": ["gatsby-ch03-p113", "gatsby-ch03-p115"]}
+{"case_id": "r30", "lang": "en", "character_id": "nick", "at": "t03-party-end", "question": "Was Gatsby drinking at his own party?", "gold_passage_ids": ["gatsby-ch03-p093"]}

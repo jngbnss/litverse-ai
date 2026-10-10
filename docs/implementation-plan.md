@@ -87,20 +87,25 @@ uv run python ../tools/smoke.py
 
 결과 (2026-10-11): `smoke.py --stage 3` 통과. 타입 검사, vitest 9개, 빌드 통과. uvicorn과 `vite preview`를 실제로 띄워 프록시를 거친 REST·WebSocket·분기·기록 확인. 브라우저 화면은 사람이 직접 확인해야 한다.
 
-## 4단계 · 평가 + CI + 실모델 — `진행중`
+## 4단계 · 평가 + CI + 실모델 — `완료` (4-5 보류, 4-6 일부 보류)
 
 목표: 시나리오 11 (평가 스크립트로 사실 일치율과 인물 일관성 측정), CI 녹색.
 
 | ID | 작업 | 설계 요약 | 상태 |
 |---|---|---|---|
-| 4-1 | 평가 데이터 80개 | retrieval 30, canon 20, character 20, branch 10 (`evals/*.jsonl`) | 진행중 |
-| 4-2 | 평가 스크립트 | `evals/run_eval.py`: Recall@K, 근거 없는 주장 비율, 지식 범위 위반률, 미래 누설률, 원작 오염률 → JSON 리포트 | 진행중 |
-| 4-3 | GitHub Actions | `permissions: contents: read`. ruff, pytest, 무결성 검사, 평가(mock), tsc, vite build, 스모크 | 진행중 |
-| 4-4 | 임베딩 검색 (선택 의존성) | BGE-M3 + FAISS를 `Retriever`로 구현. 없으면 BM25로 대체. CI에서는 다운로드하지 않음 | 진행중 |
-| 4-5 | 실모델 실험 | Ollama Qwen3-8B 4bit와 mock 비교, BM25와 BGE-M3 비교 → `experiments.md` | 진행중 |
-| 4-6 | 라이선스 확정 | `licenses.md`의 버전과 라이선스 verified, 저장소 LICENSE 결정 | 진행중 |
-| 4-7 | 스모크 테스트 | stage 4: `run_eval.py --llm mock`이 기준치 이상 | 진행중 |
+| 4-1 | 평가 데이터 80개 | retrieval 30, canon 20, character 20, branch 10 (`evals/*.jsonl`) | 완료 |
+| 4-2 | 평가 스크립트 | `evals/run_eval.py`: Recall@K, 근거 없는 주장 비율, 지식 범위 위반률, 미래 누설률, 원작 오염률 → JSON 리포트 | 완료 |
+| 4-3 | GitHub Actions | `permissions: contents: read`. ruff, pytest, 무결성 검사, 평가(mock), tsc, vite build, 스모크 | 완료 |
+| 4-4 | 임베딩 검색 (선택 의존성) | BGE-M3 + FAISS를 `Retriever`로 구현. 없으면 BM25로 대체. CI에서는 다운로드하지 않음 | 완료 |
+| 4-5 | 실모델 실험 | Ollama Qwen3-8B 4bit와 mock 비교, BM25와 BGE-M3 비교 → `experiments.md` | 보류 |
+| 4-6 | 라이선스 확정 | `licenses.md`의 버전과 라이선스 verified, 저장소 LICENSE 결정 | 보류 |
+| 4-7 | 스모크 테스트 | stage 4: `run_eval.py --llm mock`이 기준치 이상 | 완료 |
+
+결과 (2026-10-11): `smoke.py` stage 1~4 전부 통과. mock + BM25 평가: hit@5 1.0, recall@5 0.922, 사실 정확도 0.9, 분류 정확도 0.95, 근거 없는 주장 0.0 (E-001에서 0.6을 개선), 지식 범위 위반 0, 미래 누설 0, 검사기 탐지율 1.0, 오탐 0, 원작 오염 0. 리포트: `evals/reports/mock-bm25.json`.
 
 ## 막힌 점
 
-(없음)
+- **4-4 / 4-5 BGE-M3**: 이 PC에서 `sentence-transformers`를 import할 때 Windows 애플리케이션 제어 정책이 NumPy DLL을 차단한다. 코드와 가짜 인코더 테스트는 완료했다. 실측은 정책이 없는 환경에서 해야 한다 (E-002).
+- **4-5 Qwen3**: 로컬에 Ollama가 없다. 어댑터는 준비되어 있다. 설치 여부는 사용자가 결정한다 (E-003).
+- **4-6 LICENSE**: 의존성 라이선스 표는 확정했다. 이 저장소 코드의 라이선스는 팀이 정해야 한다.
+- **평가 과적합**: 용어집이 평가 질문을 보고 보강되었다. 용어집을 보지 않은 사람이 만든 새 질문으로 다시 측정해야 한다 (E-000).

@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      # 임베딩 extra(torch, faiss)는 설치하지 않는다. 모델 다운로드 없음.
+      - run: uv sync
+      - name: Ruff
+        run: |
+          uv run ruff check . ../tools ../evals
+          uv run ruff format --check . ../tools ../evals
+      - name: Work data integrity (schema, passage refs, knowledge grants, graph refs, canon/branch separation)
+        run: uv run python -m app.canon.integrity ../works/gatsby
+      - name: Pytest
+        run: uv run pytest -q
+      - name: Eval (mock LLM, BM25) + thresholds
+        run: uv run python ../evals/run_eval.py --llm mock --retriever bm25 --out ../evals/reports/ci-mock-bm25.json --check
+      - name: Smoke (stage 1, 2)
+        run: |
+          uv run python ../tools/smoke.py --stage 1
+          uv run python ../tools/smoke.py --stage 2
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

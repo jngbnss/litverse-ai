@@ -224,7 +224,27 @@ def stage3() -> None:
                 p.terminate()
 
 
-STAGES: dict[int, Callable[[], None]] = {1: stage1, 2: stage2, 3: stage3}
+def stage4() -> None:
+    out = REPO / "evals" / "reports" / "smoke-mock-bm25.json"
+    _run([sys.executable, str(REPO / "evals" / "run_eval.py"), "--llm", "mock", "--retriever",
+          "bm25", "--out", str(out), "--check"], REPO / "backend")  # fmt: skip
+    rep = json.loads(out.read_text(encoding="utf-8"))
+    out.unlink()
+    print(
+        f"  eval: hit@5 {rep['retrieval']['hit@5']}, fact {rep['canon']['fact_accuracy']}, "
+        f"unsupported {rep['canon']['unsupported_claim_rate']}, "
+        f"knowledge violation {rep['character']['knowledge_violation_rate']}, "
+        f"guard detection {rep['character']['guard_detection_rate']}, "
+        f"canon mutation {rep['branch']['canon_mutation_rate']}"
+    )
+    ci = (REPO / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+    assert "permissions:\n  contents: read" in ci
+    for step in ("ruff check", "integrity", "pytest", "run_eval.py", "typecheck", "npm run build"):
+        assert step in ci, step
+    print("  ci.yml: read-only permissions, all checks present")
+
+
+STAGES: dict[int, Callable[[], None]] = {1: stage1, 2: stage2, 3: stage3, 4: stage4}
 
 
 def main() -> int:

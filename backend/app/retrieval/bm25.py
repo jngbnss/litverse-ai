@@ -76,9 +76,13 @@ class BM25Retriever:
         if view.work_id != self.work.work_id:
             raise ValueError("knowledge view belongs to a different work")
         terms = self.expand(query)
+        # 장면 어디에나 나오는 단어만 겹친 문단은 근거가 아니다 (E-001)
+        informative = set(terms) - self.work.low_information
         hits = []
         for pid in view.visible:
             if topics and not topics & set(self.work.passages[pid].topics):
+                continue
+            if not informative & self._docs[pid].keys():
                 continue
             score = self._score(pid, terms)
             if score > 0:

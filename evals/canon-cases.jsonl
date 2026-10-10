@@ -1,0 +1,20 @@
+{"case_id": "c01", "character_id": "nick", "question": "서재의 책은 진짜야?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p045", "gatsby-ch03-p048", "gatsby-ch03-p050"]}
+{"case_id": "c02", "character_id": "nick", "question": "개츠비가 사람을 죽였다는 소문이 있어?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p030", "gatsby-ch03-p035"]}
+{"case_id": "c03", "character_id": "jordan", "question": "개츠비가 옥스퍼드 출신이라고 했어?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p083", "gatsby-ch03-p085"]}
+{"case_id": "c04", "character_id": "gatsby", "question": "전쟁 때 어느 사단이었죠?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p062", "gatsby-ch03-p063"]}
+{"case_id": "c05", "character_id": "nick", "question": "오렌지 상자는 어떻게 돼?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p002"]}
+{"case_id": "c06", "character_id": "nick", "question": "도랑에 빠진 차 이야기 해 줘", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p123", "gatsby-ch03-p137"]}
+{"case_id": "c07", "character_id": "nick", "question": "초대장은 누가 보냈어?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p007", "gatsby-ch03-p008"]}
+{"case_id": "c08", "character_id": "nick", "question": "수상비행기는 언제 타기로 했어?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p066", "gatsby-ch03-p117"]}
+{"case_id": "c09", "character_id": "nick", "question": "개츠비가 파티에서 술을 마셨어?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p093"]}
+{"case_id": "c10", "character_id": "jordan", "question": "서재에서 들은 이야기를 말해 줄 수 있어?", "expected": "canon", "gold_passage_ids": ["gatsby-ch03-p113", "gatsby-ch03-p115"]}
+{"case_id": "c11", "character_id": "nick", "question": "책이 진짜인데 페이지가 안 잘린 건 무슨 의미일까?", "expected": "interpretation", "gold_passage_ids": ["gatsby-ch03-p050"]}
+{"case_id": "c12", "character_id": "nick", "question": "개츠비가 홀로 작별 인사하는 장면은 어떤 의미야?", "expected": "interpretation", "gold_passage_ids": ["gatsby-ch03-p093", "gatsby-ch03-p153"]}
+{"case_id": "c13", "character_id": "nick", "question": "소문은 왜 그렇게 많이 돌까?", "expected": "interpretation", "gold_passage_ids": ["gatsby-ch03-p036", "gatsby-ch03-p088"]}
+{"case_id": "c14", "character_id": "nick", "question": "개츠비의 미소를 어떻게 생각해?", "expected": "interpretation", "gold_passage_ids": ["gatsby-ch03-p076"]}
+{"case_id": "c15", "character_id": "nick", "question": "도랑에 빠진 차는 무엇을 상징할까?", "expected": "interpretation", "gold_passage_ids": ["gatsby-ch03-p123", "gatsby-ch03-p137"]}
+{"case_id": "c16", "character_id": "nick", "question": "개츠비가 제일 좋아하는 음식은 뭐야?", "expected": "no_evidence", "gold_passage_ids": []}
+{"case_id": "c17", "character_id": "jordan", "question": "네 생일은 언제야?", "expected": "no_evidence", "gold_passage_ids": []}
+{"case_id": "c18", "character_id": "gatsby", "question": "당신 어머니 성함은 무엇인가요?", "expected": "no_evidence", "gold_passage_ids": []}
+{"case_id": "c19", "character_id": "nick", "question": "오늘 파티에 대통령도 왔어?", "expected": "no_evidence", "gold_passage_ids": []}
+{"case_id": "c20", "character_id": "nick", "question": "이 저택에는 침실이 몇 개야?", "expected": "no_evidence", "gold_passage_ids": []}

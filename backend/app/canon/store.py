@@ -57,6 +57,7 @@ class Work:
     timeline: Mapping[str, TimelinePoint]
     scenes: Mapping[str, Scene]
     glossary: tuple[GlossaryEntry, ...]
+    low_information: frozenset[str] = frozenset()
 
     @property
     def work_id(self) -> str:
@@ -90,6 +91,7 @@ def load_work(path: Path) -> Work:
         if line.strip()
     ]
     scenes = [Scene.model_validate(_yaml(p)) for p in sorted((path / "scenes").glob("*.yaml"))]
+    glossary = _yaml(path / "glossary.yaml")
     return Work(
         path=path,
         metadata=WorkMetadata.model_validate(_yaml(path / "metadata.yaml")),
@@ -117,9 +119,8 @@ def load_work(path: Path) -> Work:
             "point_id",
         ),
         scenes=_index(scenes, "scene_id"),
-        glossary=tuple(
-            GlossaryEntry.model_validate(g) for g in _yaml(path / "glossary.yaml")["entries"]
-        ),
+        glossary=tuple(GlossaryEntry.model_validate(g) for g in glossary["entries"]),
+        low_information=frozenset(glossary.get("low_information", ())),
     )
 
 

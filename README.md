@@ -5,7 +5,30 @@
 
 ## 현재 상태
 
-4단계 중 **2단계 완료**: 작품 데이터, Canon Engine, BM25 검색, canon-guard 검사기(1단계) + 대화 파이프라인, LLM 어댑터(mock/Ollama), FastAPI·WebSocket, 관계 그래프, 가상 분기, 탐험 기록(2단계). 작업별 진행 상황은 [docs/implementation-plan.md](docs/implementation-plan.md)에 있다.
+4단계 계획 중 1~4단계 구현 완료. 실모델(Qwen3)과 BGE-M3 실측만 보류 중이다. 작업별 진행 상황과 막힌 점은 [docs/implementation-plan.md](docs/implementation-plan.md)에 있다.
+
+| 단계 | 내용 |
+|---|---|
+| 1 | 작품 데이터, Canon Engine(지식 범위), BM25 검색, canon-guard |
+| 2 | 대화 파이프라인, LLM 어댑터(mock/Ollama), FastAPI·WebSocket, 관계 그래프, 가상 분기, 탐험 기록 |
+| 3 | 프론트엔드 6개 화면 (React + Vite) |
+| 4 | 평가 80케이스 + 측정 스크립트, GitHub Actions CI, 임베딩 검색(선택) |
+
+## 로컬에서 실행
+
+```bash
+# 터미널 1: 백엔드 (기본 mock 모델) → http://127.0.0.1:8000/docs
+cd backend
+uv sync
+uv run uvicorn --factory app.main:create_app --port 8000
+
+# 터미널 2: 프론트엔드 → http://localhost:5173
+cd frontend
+npm install
+npm run dev
+```
+
+실모델을 쓰려면 Ollama에서 `ollama pull qwen3:8b`를 받은 뒤 백엔드를 `LITVERSE_LLM=ollama`로 띄운다. 설정은 [.env.example](.env.example)에 있다.
 
 ## MVP
 
@@ -24,28 +47,26 @@ backend/app/
   relationships/       NetworkX 관계 그래프
   branching/           가상 분기
   services/ api/       유스케이스, REST·WebSocket
+frontend/src/          React 화면 6개, API 클라이언트, Zustand 상태
+evals/                 평가 데이터 80개, run_eval.py, 리포트
 works/gatsby/          원작 데이터 (passage-tags.yaml → passages.jsonl)
 tools/                 원문 추출, 스모크 테스트
 docs/                  제안서, 결정 기록, 저작권, 라이선스, 실험
 ```
 
-## 실행
+## 검사
 
 ```bash
 cd backend
-uv sync
 uv run pytest
-uv run ruff check . ../tools
+uv run ruff check . ../tools ../evals
 uv run python -m app.canon.integrity ../works/gatsby
-uv run python ../tools/smoke.py   # 단계별 스모크 테스트
-
-# API 서버 (기본 mock 모델, http://127.0.0.1:8000/docs)
-uv run uvicorn --factory app.main:create_app --reload
-# 실모델: Ollama에서 `ollama pull qwen3:8b` 후
-LITVERSE_LLM=ollama uv run uvicorn --factory app.main:create_app
+uv run python ../evals/run_eval.py --llm mock --retriever bm25 --check
+uv run python ../tools/smoke.py          # 단계별 스모크 (stage 3은 npm 필요)
+cd ../frontend && npm test && npm run build
 ```
 
-설정은 [.env.example](.env.example) 참고. 설계는 [backend/DESIGN.md](backend/DESIGN.md).
+설계: [backend/DESIGN.md](backend/DESIGN.md) · [frontend/DESIGN.md](frontend/DESIGN.md) · [works/README.md](works/README.md) · [evals/README.md](evals/README.md)
 
 원문을 다시 추출하려면 (PG 원문 파일은 커밋하지 않는다):
 

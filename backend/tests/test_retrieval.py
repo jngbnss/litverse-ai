@@ -43,7 +43,7 @@ def test_nick_cannot_retrieve_future(retriever, view):
 
 
 def test_topic_filter(retriever, view):
-    hits = retriever.search("개츠비", view("nick"), k=20, topics=frozenset({"rumor"}))
+    hits = retriever.search("개츠비 소문", view("nick"), k=20, topics=frozenset({"rumor"}))
     assert hits
     assert all("rumor" in retriever.work.passages[h.passage_id].topics for h in hits)
 

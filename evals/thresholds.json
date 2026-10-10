@@ -1,0 +1,22 @@
+{
+  "retrieval": {
+    "hit@5": [">=", 0.8],
+    "wrong_work_rate": ["<=", 0.0],
+    "wrong_character_rate": ["<=", 0.0]
+  },
+  "canon": {
+    "final_inconsistent_rate": ["<=", 0.0]
+  },
+  "character": {
+    "knowledge_violation_rate": ["<=", 0.0],
+    "future_leak_rate": ["<=", 0.0],
+    "guard_detection_rate": [">=", 1.0],
+    "guard_false_positive_rate": ["<=", 0.0]
+  },
+  "branch": {
+    "canon_mutation_rate": ["<=", 0.0],
+    "branch_internal_inconsistency_rate": ["<=", 0.0],
+    "canon_isolation_rate": [">=", 1.0],
+    "report_separation_rate": [">=", 1.0]
+  }
+}
