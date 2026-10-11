@@ -97,7 +97,7 @@ uv run python ../tools/smoke.py
 | 4-2 | 평가 스크립트 | `evals/run_eval.py`: Recall@K, 근거 없는 주장 비율, 지식 범위 위반률, 미래 누설률, 원작 오염률 → JSON 리포트 | 완료 |
 | 4-3 | GitHub Actions | `permissions: contents: read`. ruff, pytest, 무결성 검사, 평가(mock), tsc, vite build, 스모크 | 완료 |
 | 4-4 | 임베딩 검색 (선택 의존성) | BGE-M3 + FAISS를 `Retriever`로 구현. 없으면 BM25로 대체. CI에서는 다운로드하지 않음 | 완료 |
-| 4-5 | 실모델 실험 | Ollama Qwen3-8B 4bit와 mock 비교, BM25와 BGE-M3 비교 → `experiments.md` | 보류 |
+| 4-5 | 실모델 실험 | Ollama Qwen3-8B 4bit와 mock 비교, BM25와 BGE-M3 비교 → `experiments.md` | 진행중 |
 | 4-6 | 라이선스 확정 | `licenses.md`의 버전과 라이선스 verified, 저장소 LICENSE 결정 | 보류 |
 | 4-7 | 스모크 테스트 | stage 4: `run_eval.py --llm mock`이 기준치 이상 | 완료 |
 
