@@ -13,16 +13,18 @@ import { gardenBridge } from "./game/gardenBridge";
 import type { Target } from "./game/bridge";
 import w from "./world.module.css";
 
-/** 화면 2: 문학 세계 탐험 — 정원을 걸어 다니며 인물에게 말을 걸고 오브젝트를 조사한다 */
+/** 화면 2: 문학 세계 탐험 — 웨스트에그를 3D로 돌아다니며 인물에게 말을 걸고 단서를 조사한다 */
 export function WorldScreen() {
   const { scene, discoveries, inspect, setCharacter } = useSession();
   const host = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<Target | null>(null);
   const [focus, setFocus] = useState<Target | null>(null);
   const [loadError, setLoadError] = useState(false);
+  const [area, setArea] = useState<string | null>(null);
   const found = Object.keys(discoveries);
 
-  // 게임은 필요할 때만 불러온다 (Phaser는 무겁고, 테스트 환경에는 캔버스가 없다)
+  // 게임은 필요할 때만 불러온다 (Three.js는 무겁고, 테스트 환경에는 WebGL이 없다)
   useEffect(() => {
     if (!scene || !host.current) return;
     let game: { destroy: (removeCanvas: boolean) => void } | null = null;
@@ -51,13 +53,16 @@ export function WorldScreen() {
 
   useEffect(() => {
     const offFocus = gardenBridge.game.on("focus", setFocus);
+    const offArea = gardenBridge.game.on("area", setArea);
     const offInteract = gardenBridge.game.on("interact", (t) => {
       setOpen(t);
+      if (t.kind === "vehicle") return;
       if (t.kind === "character") setCharacter(t.id);
       else void inspect(t.id);
     });
     return () => {
       offFocus();
+      offArea();
       offInteract();
     };
   }, [inspect, setCharacter]);
@@ -82,12 +87,27 @@ export function WorldScreen() {
 
   return (
     <div className={w.layout}>
-      <div className={w.stageWrap}>
-        <div ref={host} className={w.stage} aria-label="개츠비 저택 정원" />
+      <div ref={stage} className={w.stageWrap}>
+        <div ref={host} className={w.stage} aria-label="웨스트에그 오픈월드" />
+        {area && (
+          <div key={area} className={w.area}>
+            {area}
+          </div>
+        )}
+        <button
+          className={w.fullscreen}
+          onClick={() => {
+            if (document.fullscreenElement) void document.exitFullscreen();
+            else void stage.current?.requestFullscreen?.();
+          }}
+          aria-label="전체 화면"
+        >
+          ⛶ 전체 화면
+        </button>
         {loadError && <p className={w.loadError}>게임 화면을 불러오지 못했어요. 새로고침해 주세요.</p>}
         {!open && focus && (
           <div className={w.hint} aria-live="polite">
-            {focus.kind === "character" ? `${focus.label}에게 말을 걸 수 있어요 (E)` : `${focus.label} 조사하기 (E)`}
+            {hintText(focus)}
           </div>
         )}
         {open?.kind === "character" && <TalkBox characterId={open.id} onClose={() => setOpen(null)} />}
@@ -99,12 +119,14 @@ export function WorldScreen() {
           <div className={s.eyebrow}>{scene.now_label_ko}</div>
           <h3>{scene.title_ko}</h3>
           <p className={`${s.muted} ${s.small}`}>
-            웨스트에그, 개츠비 저택의 정원. 오늘 밤 처음 초대받은 손님이 되어 파티장을 돌아다녀 보세요.
+            닉의 오두막 앞에서 시작해요. 옆집 개츠비 저택에서 파티가 한창이에요. 만 건너편에는 데이지의 집이
+            있어요.
           </p>
           <ul className={w.keys}>
-            <li><kbd>WASD</kbd>·<kbd>방향키</kbd> 이동 (클릭해도 걸어가요)</li>
-            <li><kbd>E</kbd>·<kbd>Space</kbd> 말 걸기 · 조사하기</li>
-            <li><kbd>Esc</kbd> 창 닫기</li>
+            <li><kbd>WASD</kbd> 이동 · <kbd>Shift</kbd> 달리기</li>
+            <li>화면 클릭 후 <kbd>마우스</kbd>로 시점 (드래그도 돼요) · 휠로 거리</li>
+            <li><kbd>E</kbd> 말 걸기 · 조사하기 · 차 타고 내리기</li>
+            <li><kbd>Esc</kbd> 창 닫기 · 마우스 풀기</li>
           </ul>
         </section>
         <section className={ui.panel}>
@@ -146,6 +168,13 @@ export function WorldScreen() {
       </aside>
     </div>
   );
+}
+
+function hintText(t: Target): string {
+  if (t.kind === "character") return `${t.label}에게 말을 걸 수 있어요 (E)`;
+  if (t.kind === "object") return `${t.label} 조사하기 (E)`;
+  if (t.id === "car-exit") return "W 가속 · S 브레이크·후진 · A/D 방향 · E 내리기";
+  return `${t.label} 타기 (E)`;
 }
 
 /** 게임 화면 아래쪽에 뜨는 대화창 */

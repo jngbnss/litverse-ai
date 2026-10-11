@@ -1,6 +1,6 @@
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 2.2fr) minmax(240px, 1fr);
+  grid-template-columns: minmax(0, 3fr) minmax(220px, 1fr);
   gap: 16px;
   align-items: start;
 }
@@ -17,8 +17,27 @@
   overflow: hidden;
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
-  background: #2c5631;
-  aspect-ratio: 16 / 10;
+  background: #16233f;
+  aspect-ratio: 16 / 9;
+  min-height: 420px;
+}
+
+.stageWrap:fullscreen {
+  border-radius: 0;
+  border: 0;
+  aspect-ratio: auto;
+}
+
+.fullscreen {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  border: 1px solid rgb(255 250 240 / 0.5);
+  background: rgb(20 18 14 / 0.6);
+  color: #fffaf0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
 }
 
 .stage {
@@ -26,10 +45,28 @@
   inset: 0;
 }
 
-.stage canvas {
-  display: block;
-  image-rendering: pixelated;
-  touch-action: none;
+.stage canvas:first-child {
+  cursor: crosshair;
+}
+
+/* 지역에 들어서면 왼쪽 위에 잠깐 뜨는 이름 */
+.area {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  color: #fffaf0;
+  font-family: Georgia, "Noto Serif KR", serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 0 2px 6px rgb(0 0 0 / 0.7);
+  pointer-events: none;
+  animation: areaFade 3.5s ease forwards;
+}
+
+@keyframes areaFade {
+  0% { opacity: 0; transform: translateY(-6px); }
+  12%, 70% { opacity: 1; transform: none; }
+  100% { opacity: 0; }
 }
 
 .loadError {
