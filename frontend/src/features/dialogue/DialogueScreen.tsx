@@ -4,12 +4,11 @@ import { Badge } from "../../components/Badge";
 import { CitationList } from "../../components/CitationList";
 import { Portrait } from "../../components/Portrait";
 import ui from "../../components/ui.module.css";
-import { DialogueSocket } from "../../services/dialogueSocket";
 import { type Turn, useSession } from "../../store/session";
-import type { SocketEvent } from "../../types/api";
 import s from "../screens.module.css";
+import { useDialogue } from "./useDialogue";
 
-const SUGGESTIONS: Record<string, string[]> = {
+export const SUGGESTIONS: Record<string, string[]> = {
   nick: [
     "개츠비가 사람을 죽였다는 소문이 있어?",
     "서재의 책은 진짜였어?",
@@ -23,7 +22,7 @@ const SUGGESTIONS: Record<string, string[]> = {
   ],
 };
 
-const EMOTION_KO: Record<string, string> = {
+export const EMOTION_KO: Record<string, string> = {
   curious: "호기심",
   composed: "침착함",
   amused: "재미있어함",
@@ -37,47 +36,21 @@ const EMOTION_KO: Record<string, string> = {
 
 /** 화면 3: 인물 대화 — 초상화, 자유 질문, 대화 기록, 현재 감정, 원문 근거 */
 export function DialogueScreen() {
-  const { scene, session, turns, activeCharacter, setCharacter, addQuestion, resolveTurn, failTurn } =
-    useSession();
+  const { scene, session, turns, activeCharacter, setCharacter } = useSession();
   const [text, setText] = useState("");
-  const socket = useRef<DialogueSocket | null>(null);
-  const pending = useRef<number[]>([]);
   const chatEnd = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!session) return;
-    const ws = new DialogueSocket(session.session_id, (e: SocketEvent) => {
-      if (e.type === "reply") {
-        const id = pending.current.shift();
-        if (id !== undefined) resolveTurn(id, e);
-      } else if (e.type === "error") {
-        const id = pending.current.shift();
-        if (id !== undefined) failTurn(id, e.detail);
-      }
-    });
-    socket.current = ws;
-    return () => ws.close();
-  }, [session, resolveTurn, failTurn]);
-
-  const mode = session?.mode ?? "canon";
-  const visible = turns.filter((t) => t.characterId === activeCharacter && t.mode === mode);
+  const character = scene?.characters.find((c) => c.character_id === activeCharacter) ?? scene?.characters[0];
+  const { mode, visible, waiting, send: ask } = useDialogue(character?.character_id ?? activeCharacter);
 
   useEffect(() => {
     chatEnd.current?.scrollIntoView?.({ block: "end" });
   }, [visible.length, turns]);
 
-  if (!scene || !session) return null;
-  const character = scene.characters.find((c) => c.character_id === activeCharacter) ?? scene.characters[0];
+  if (!scene || !session || !character) return null;
   const last = [...visible].reverse().find((t) => t.reply);
-  const waiting = visible.some((t) => !t.reply && !t.error);
 
   const send = (question: string) => {
-    const q = question.trim();
-    if (!q || waiting) return;
-    const id = addQuestion(character.character_id, q);
-    pending.current.push(id);
-    socket.current?.ask(character.character_id, q);
-    setText("");
+    if (ask(question)) setText("");
   };
 
   return (

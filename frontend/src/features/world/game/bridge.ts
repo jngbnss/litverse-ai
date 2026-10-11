@@ -1,0 +1,46 @@
+/**
+ * 게임(Phaser)과 React 화면 사이의 이벤트 통로.
+ * 게임은 "무엇 앞에 서 있는지"와 "무엇과 상호작용했는지"만 알리고,
+ * 서버 호출과 대화 표시는 React 쪽이 맡는다 (진실의 원천은 서버).
+ */
+
+export interface Target {
+  kind: "character" | "object";
+  id: string;
+  label: string;
+}
+
+type GameEvents = {
+  /** 플레이어가 가까이 선 대상. 멀어지면 null */
+  focus: Target | null;
+  /** E·스페이스·클릭으로 상호작용 */
+  interact: Target;
+};
+
+type UiEvents = {
+  /** 대화창이 열려 있으면 이동을 멈춘다 */
+  paused: boolean;
+  /** 조사한 오브젝트 표시 */
+  found: string[];
+};
+
+type Handler<T> = (payload: T) => void;
+
+class Channel<E extends Record<string, unknown>> {
+  private handlers: { [K in keyof E]?: Set<Handler<E[K]>> } = {};
+
+  on<K extends keyof E>(event: K, handler: Handler<E[K]>): () => void {
+    const set = (this.handlers[event] ??= new Set());
+    set.add(handler);
+    return () => set.delete(handler);
+  }
+
+  emit<K extends keyof E>(event: K, payload: E[K]): void {
+    this.handlers[event]?.forEach((h) => h(payload));
+  }
+}
+
+export class GameBridge {
+  readonly game = new Channel<GameEvents>();
+  readonly ui = new Channel<UiEvents>();
+}

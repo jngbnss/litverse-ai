@@ -1,0 +1,129 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(240px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stageWrap {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: #2c5631;
+  aspect-ratio: 16 / 10;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.stage canvas {
+  display: block;
+  image-rendering: pixelated;
+  touch-action: none;
+}
+
+.loadError {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: #fffaf0;
+}
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  background: rgb(20 18 14 / 0.78);
+  color: #fffaf0;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 13px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* 게임 위에 뜨는 RPG식 대화창 */
+.box {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  max-height: calc(100% - 24px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: 8px;
+  padding: 12px;
+  background: var(--surface);
+  color: var(--text);
+  border: 3px solid var(--text);
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px var(--surface), 0 8px 24px rgb(0 0 0 / 0.35);
+}
+
+[data-mode="what_if"] .box {
+  border-color: var(--whatif);
+}
+
+.boxHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.boxHead > div {
+  flex: 1;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.close {
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+}
+
+.chat {
+  overflow-y: auto;
+  min-height: 60px;
+  max-height: 240px;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.keys,
+.clues {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.keys kbd {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 4px;
+  background: var(--surface-2);
+}

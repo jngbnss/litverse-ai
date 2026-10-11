@@ -16,6 +16,7 @@
 | NetworkX | 관계 그래프 | BSD-3-Clause | 3.7 | verified |
 | React / React DOM | 프론트엔드 | MIT | 19.3.0 | verified |
 | Zustand | 상태 관리 | MIT | 5.0.15 | verified |
+| Phaser | 탐험 화면 게임 엔진 | MIT | 4.2.1 | verified |
 | Vite | 번들러 | MIT | 8.3.4 | verified |
 | TypeScript | 타입 검사 | Apache-2.0 | 7.0.2 | verified |
 | Vitest | 테스트 | MIT | 5.0.3 | verified |
