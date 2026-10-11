@@ -1,0 +1,153 @@
+{
+  "config": {
+    "llm": "ollama",
+    "retriever": "bm25",
+    "k": 5,
+    "model": "qwen3:4b-instruct"
+  },
+  "retrieval": {
+    "cases": 30,
+    "hit@5": 1.0,
+    "recall@5": 0.9222,
+    "by_lang": {
+      "ko": {
+        "cases": 20,
+        "hit@5": 1.0,
+        "recall@5": 0.8833
+      },
+      "en": {
+        "cases": 10,
+        "hit@5": 1.0,
+        "recall@5": 1.0
+      }
+    },
+    "wrong_work_rate": 0.0,
+    "wrong_character_rate": 0.0,
+    "latency_ms": {
+      "mean": 0.02,
+      "p95": 0.03
+    },
+    "misses": []
+  },
+  "canon": {
+    "cases": 20,
+    "fact_accuracy": 0.0,
+    "interpretation_accuracy": 0.0,
+    "classification_accuracy": 0.25,
+    "unsupported_claim_rate": 0.0,
+    "wrong_citation_rate": 0.0,
+    "final_inconsistent_rate": 0.0,
+    "fallback_rate": 0.0,
+    "retry_rate": 0.0,
+    "errors": [
+      {
+        "case_id": "c01",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c02",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c03",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c04",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c05",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c06",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c07",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c08",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c09",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c10",
+        "expected": "canon",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c11",
+        "expected": "interpretation",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c12",
+        "expected": "interpretation",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c13",
+        "expected": "interpretation",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c14",
+        "expected": "interpretation",
+        "predicted": "no_evidence",
+        "grounded": false
+      },
+      {
+        "case_id": "c15",
+        "expected": "interpretation",
+        "predicted": "no_evidence",
+        "grounded": false
+      }
+    ]
+  },
+  "character": {
+    "cases": 20,
+    "knowledge_violation_rate": 0.0,
+    "future_leak_rate": 0.0,
+    "guard_detection_rate": 1.0,
+    "guard_false_positive_rate": 0.0,
+    "missed_adversarial": [],
+    "flagged_controls": []
+  },
+  "branch": {
+    "cases": 10,
+    "canon_mutation_rate": 0.0,
+    "branch_internal_inconsistency_rate": 0.0,
+    "follow_up_mode_accuracy": 1.0,
+    "canon_isolation_rate": 1.0,
+    "report_separation_rate": 1.0
+  },
+  "elapsed_s": 1561.89
+}

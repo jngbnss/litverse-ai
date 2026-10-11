@@ -5,7 +5,7 @@
 
 ## 현재 상태
 
-4단계 계획 중 1~4단계 구현 완료. 실모델(Qwen3)과 BGE-M3 실측만 보류 중이다. 작업별 진행 상황과 막힌 점은 [docs/implementation-plan.md](docs/implementation-plan.md)에 있다.
+4단계 계획 중 1~4단계 구현 완료. 실모델은 Qwen3-4B로 측정했고(docs/experiments.md E-003), Qwen3-8B와 BGE-M3 실측은 보류 중이다. 작업별 진행 상황과 막힌 점은 [docs/implementation-plan.md](docs/implementation-plan.md)에 있다.
 
 | 단계 | 내용 |
 |---|---|

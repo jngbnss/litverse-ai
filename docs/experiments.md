@@ -28,9 +28,32 @@
 - 다음: 정책이 없는 환경(다른 PC, WSL, CI 수동 job)에서 `uv sync --extra embeddings` 후
   `run_eval.py --retriever embedding`과 `--retriever hybrid`를 돌려 E-000과 비교한다.
 
-## E-003 · 예정 · 실모델(Qwen3-8B) 대화 품질
+## E-003 · 2026-10-11 · 실모델(Qwen3-4B) 대화 품질
 
-- 준비: `OllamaLLM` 어댑터가 JSON 스키마 출력, `think: false`로 구현되어 있고 MockTransport 테스트를 통과한다.
-- 막힘: 로컬에 Ollama가 설치되어 있지 않다 (시스템 설치는 사용자가 결정할 일).
-- 실행: `ollama pull qwen3:8b` 후 `LITVERSE_LLM=ollama uv run --project backend python evals/run_eval.py --llm ollama`.
-  mock 대비 재생성률, 안전 답변 대체율, 근거 없는 주장 비율, 숨긴 정보 누설률을 비교한다.
+- 환경: Ollama, `qwen3:4b-instruct` (Q4_K_M), RTX 4050 Laptop 6GB, BM25, k=5. 8B는 VRAM 6GB에 다 올라가지 않아 4B로 쟀다. 8B 측정은 남은 과제다.
+- 실행: `LITVERSE_LLM=ollama OLLAMA_MODEL=qwen3:4b-instruct uv run --project backend python evals/run_eval.py --llm ollama --out evals/reports/qwen3-4b-bm25.json --check`
+- 문제 1 (실행 실패): canon 평가 중 한 요청이 2분 넘게 끝나지 않아 `ReadTimeout`으로 평가가 멈췄다. 다른 요청은 4~24초였다.
+  - 원인: JSON 스키마로 제한한 출력에 길이 상한이 없어, 모델이 생성을 끝내지 못하는 경우가 생긴다.
+  - 개선: Ollama 요청에 `num_predict: 1024`를 둔다. 잘린 출력은 `schema_error`로 재생성 → 안전 답변 경로를 탄다. `OLLAMA_TIMEOUT` 환경변수가 무시되던 문제도 고쳤다.
+- 문제 2 (주장 누락): 실행은 끝났고 `--check`도 통과했지만 사실 정확도 **0.0**, 해석 정확도 0.0, 분류 정확도 0.25였다 (`qwen3-4b-bm25-before.json`).
+  - 원인: 원본 출력을 보니 답변 내용은 원문과 맞았지만 `claims`를 매번 빼고 `reply`·`mode`만 냈다. 스키마에서 `claims`가 선택 필드(기본값 `[]`)였고 프롬프트도 claims를 요구하지 않았다. 주장이 없으니 검사기가 잡을 것도 없어서 안전 지표는 모두 통과했다.
+  - 개선: 모델에 보내는 스키마에서 `claims`와 `Claim.passage_ids`를 필수로 바꾸고, 규칙에 "reply의 사실과 해석을 claims에 한 줄씩 나눠 적는다"를 넣었다 (`characters/prompt.py`).
+- 재측정 (`qwen3-4b-bm25.json`, 80케이스 2205초):
+
+| 지표 | mock | Qwen3-4B 개선 전 | Qwen3-4B 개선 후 |
+|---|---|---|---|
+| 사실 정확도 (10) | 0.9 | 0.0 | **0.5** |
+| 해석 정확도 (5) | 1.0 | 0.0 | **0.0** |
+| 분류 정확도 (20) | 0.95 | 0.25 | 0.5 |
+| 근거 없는 주장 비율 (5) | 0.0 | 0.0 | 0.0 |
+| 잘못된 인용률 | 0.0 | 0.0 | 0.143 |
+| 재생성률 / 안전 답변 대체율 | 0 / 0 | 0 / 0 | 0.2 / 0.1 |
+| 최종 불일치 / 지식 범위 위반 / 미래 누설 | 0 / 0 / 0 | 0 / 0 / 0 | 0 / 0 / 0 |
+| 분기 원작 오염 / 격리 | 0 / 1.0 | 0 / 1.0 | 0 / 1.0 |
+
+- 결과: 안전 쪽 지표(누설, 지식 범위, 원작 오염, 최종 불일치)는 실모델에서도 0을 지켰다. canon-guard와 재생성 경로가 실제로 동작한다 (재생성 4건, 안전 답변 2건).
+- 남은 오류: 사실 질문 5개(c04 c05 c06 c08 c10)를 근거 없음으로 답하고, 해석 질문 5개는 모두 CANON으로 표시하거나(c11 c13) 근거 없음으로 답한다. 4B 모델은 CANON과 INTERPRETATION을 잘 구분하지 못한다.
+- 한계·다음:
+  - `thresholds.json`에 사실·해석 정확도 기준이 없어, 주장이 없는 출력도 `--check`를 통과한다. 실모델용 기준을 따로 둘지 정해야 한다.
+  - 해석 구분은 프롬프트에 CANON/INTERPRETATION 예시를 넣거나, 8B(또는 더 큰 GPU)로 다시 잰다.
+  - 케이스가 사실 10, 해석 5개라 한 문제가 0.1~0.2를 움직인다. 수치는 방향만 본다.

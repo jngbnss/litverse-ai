@@ -25,5 +25,6 @@ class Settings:
             llm=llm,  # type: ignore[arg-type]
             ollama_url=os.environ.get("OLLAMA_URL", cls.ollama_url),
             ollama_model=os.environ.get("OLLAMA_MODEL", cls.ollama_model),
+            ollama_timeout=float(os.environ.get("OLLAMA_TIMEOUT", cls.ollama_timeout)),
             database_url=os.environ.get("LITVERSE_DATABASE_URL", cls.database_url),
         )

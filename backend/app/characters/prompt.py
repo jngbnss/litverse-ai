@@ -16,6 +16,7 @@ RULES_CANON = """\
 4. 문단에 없는 일, 앞으로 일어날 일, 다른 사람의 속마음은 모른다고 답한다.
 5. 원작 모드에서는 WHAT_IF 주장을 쓰지 않는다. mode는 "canon"이다.
 6. 한국어로, 인물의 말투로 2~4문장만 답한다.
+7. reply에서 말한 사실과 해석을 claims에 한 줄씩 나눠 적는다. 근거 문단이 없는 답이면 claims는 빈 배열이다.
 """
 
 RULES_WHAT_IF = """\
@@ -24,6 +25,7 @@ RULES_WHAT_IF = """\
 2. 원작에서 확인되는 내용을 함께 말할 때는 CANON으로 표시하고 passage_id를 붙인다.
 3. 분기 시점 이후의 원작 사건이나 결말은 모른다.
 4. mode는 "what_if"이다. 한국어로, 인물의 말투로 2~4문장만 답한다.
+5. reply에서 말한 내용을 claims에 한 줄씩 나눠 적는다 (WHAT_IF 또는 CANON).
 """
 
 
@@ -89,4 +91,7 @@ def retry_message(issues: list[str]) -> dict[str, str]:
 def reply_schema(mode: Mode) -> dict:
     schema = CharacterReply.model_json_schema()
     schema["properties"]["mode"] = {"const": mode}
+    # 선택 필드는 작은 모델이 통째로 빼먹는다 (E-003). 모델에게는 필수로 요구한다.
+    schema["required"] = ["reply", "claims", "mode"]
+    schema["$defs"]["Claim"]["required"] = ["text", "type", "passage_ids"]
     return schema

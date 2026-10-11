@@ -121,4 +121,7 @@ def test_ollama_adapter_request_shape(work, retriever):
     assert r.report.is_consistent
     assert seen["model"] == "qwen3:8b" and seen["stream"] is False
     assert seen["format"]["properties"]["mode"] == {"const": "canon"}
+    assert seen["options"]["num_predict"] > 0
+    assert "claims" in seen["format"]["required"]
+    assert "passage_ids" in seen["format"]["$defs"]["Claim"]["required"]
     CharacterReply.model_validate_json(dump(reply="x", claims=[], mode="canon"))

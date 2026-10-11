@@ -162,7 +162,9 @@ class OllamaLLM:
                 "format": request.json_schema,
                 "stream": False,
                 "think": False,
-                "options": {"temperature": 0.3},
+                # 스키마 제한 출력이 끝나지 않는 경우가 있어 길이를 제한한다.
+                # 잘린 출력은 파이프라인에서 schema_error로 재생성된다 (E-003).
+                "options": {"temperature": 0.3, "num_predict": 1024},
             },
         )
         resp.raise_for_status()
